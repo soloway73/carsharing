@@ -1,7 +1,20 @@
 /* мобилка */
 @media (min-width: 100px) {
+  html,
+  body {
+    height: 100%;
+  }
   body {
     font-family: "Roboto";
+  }
+  main {
+    flex-grow: 1;
+  }
+  .wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .main-nav {
     display: block;
@@ -245,8 +258,42 @@
     width: 100%;
     height: 50px;
     margin-top: 32px;
+    margin-bottom: auto;
   }
   .button:hover {
     filter: brightness(90%);
+  }
+  footer {
+    display: flex;
+    height: 150px;
+  }
+  .main-footer {
+    display: flex;
+    flex-direction: column;
+    background-color: #151b1f;
+    height: 72px;
+    width: 100%;
+    margin-top: auto;
+  }
+  .main-footer p {
+    font-style: normal;
+    font-size: 13px;
+    line-height: 15px;
+    color: #eeeeee;
+    margin-bottom: 16px;
+    margin-right: 16px;
+    margin-left: auto;
+    margin-top: 8px;
+  }
+  .main-footer a {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    color: #0ec261;
+    text-decoration: none;
+    margin-top: 16px;
+    margin-right: 16px;
+    margin-left: auto;
   }
 }
