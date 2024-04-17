@@ -107,7 +107,7 @@ a.language {
   z-index: 5;
   display: block;
   position: relative;
-  width: 19px;
+  width: 18px;
   height: 18px;
   cursor: pointer;
   margin-top: auto;
@@ -143,13 +143,15 @@ a.language {
 }
 .menu-icon._active::before {
   top: 50%;
-  transform: rotate(-45deg) translate(0px, -50%);
+  transform: rotate(-45deg) translate(1px, -50%);
   background-color: #ffffff;
+  width: 18px;
 }
 .menu-icon._active::after {
   bottom: 50%;
   transform: rotate(45deg) translate(0px, 50%);
   background-color: #ffffff;
+  width: 18px;
 }
 h1 {
   color: #0ec261;
