@@ -16,6 +16,9 @@
     flex-direction: column;
     justify-content: space-between;
   }
+  .sidebar {
+    display: none;
+  }
   .main-nav {
     display: block;
     position: relative;
@@ -97,7 +100,10 @@
 
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
-  .container.top-mobile {
+  .language2 {
+    display: none;
+  }
+  .container {
     width: 288px;
     height: 36px;
     display: flex;
@@ -293,5 +299,125 @@
     margin-top: 16px;
     margin-right: 16px;
     margin-left: auto;
+  }
+  .geo2 {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .sidebar {
+    display: block;
+    background-color: #151b1f;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+
+    width: 86px;
+  }
+  .menu-icon {
+    width: 32px;
+    margin-top: 10px;
+  }
+
+  .menu-icon span,
+  .menu-icon::after,
+  .menu-icon::before {
+    background-color: #ffffff;
+    width: 100%;
+    margin-left: 10px;
+  }
+  h1 {
+    text-align: left;
+    left: 0;
+    top: 0;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+  .geo {
+    display: none;
+  }
+  .geo2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 16.5px;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+  .container {
+    width: 100%;
+  }
+  .main-title {
+    display: flex;
+    width: 100%;
+    height: 33px;
+    justify-content: space-between;
+    margin-left: 118px;
+    margin-right: 32.5px;
+    margin-top: 5px;
+  }
+  .geo2 img {
+    width: 15px;
+    height: 18px;
+    margin-right: 7px;
+  }
+  .main-container {
+    margin-left: 118px;
+    margin-top: 163px;
+  }
+  .main-container h2,
+  .main-container h2 span {
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 70px;
+  }
+  .main-container p {
+    font-size: 26px;
+    line-height: 30.47px;
+    margin-top: 34px;
+  }
+  /* Rectangle 3 */
+  .button {
+    background-blend-mode: darken;
+    border-radius: 8px;
+    width: 250px;
+    margin-left: 118px;
+  }
+  .main-footer {
+    background: none;
+    flex-direction: row;
+
+    margin-bottom: 42px;
+    height: auto;
+  }
+  .main-footer p {
+    order: -1;
+    margin-left: 59px;
+    font-size: 13px;
+    line-height: 15px;
+    color: #999999;
+    margin: 0;
+  }
+  .main-footer a {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  div.language {
+    display: none;
+  }
+  .language2 {
+    order: -2;
+    z-index: 4;
+    display: block;
+    width: 30.35px;
+    text-transform: none !important;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    color: #0ec261;
+    margin-left: 29px;
+    margin-right: 59px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 }
