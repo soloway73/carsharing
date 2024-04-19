@@ -3,6 +3,7 @@
   html,
   body {
     height: 100%;
+    padding: 0;
   }
   body {
     font-family: "Roboto";
@@ -346,7 +347,7 @@
     margin-top: auto;
   }
   .container {
-    width: 100%;
+    width: calc(100% - 16px);
   }
   .main-title {
     display: flex;
@@ -402,6 +403,8 @@
   .main-footer a {
     margin-top: auto;
     margin-bottom: auto;
+    color: #121212;
+    margin-right: 36px;
   }
   div.language {
     display: none;
