@@ -1,13 +1,15 @@
 //бургерное меню
-const iconMenu = document.querySelector(".menu-icon");
+const iconMenu = document.querySelectorAll(".menu-icon");
 const menuBody = document.querySelector(".links");
 
-if (iconMenu) {
-  iconMenu.addEventListener("click", function (e) {
-    document.body.classList.toggle("lock");
-    menuBody.classList.toggle("_active");
-    iconMenu.classList.toggle("_active");
-  });
+for (let i = 0; i < iconMenu.length; i++) {
+  if (iconMenu[i]) {
+    iconMenu[i].addEventListener("click", function (e) {
+      document.body.classList.toggle("lock");
+      menuBody.classList.toggle("_active");
+      iconMenu[i].classList.toggle("_active");
+    });
+  }
 }
 
 let links = menuBody.querySelectorAll("a");

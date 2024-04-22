@@ -11,11 +11,8 @@
   main {
     flex-grow: 1;
   }
-  .wrapper {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  .desktop {
+    display: none;
   }
   .sidebar {
     display: none;
@@ -439,5 +436,81 @@
     margin-left: 97px;
     padding: 0;
     margin-top: 38px;
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    height: 100%;
+  }
+  .mobile {
+    display: none;
+  }
+  .desktop {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  .sidebar {
+    width: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+  }
+  .menu-icon {
+    width: 32px;
+    width: 32px;
+    margin: 0;
+    margin-top: 31px;
+    align-self: center;
+  }
+  .menu-icon::before,
+  .menu-icon::after,
+  .menu-icon span {
+    width: 32px;
+    margin: 0;
+  }
+  .language2 {
+    margin-left: 21px;
+  }
+  .container {
+    width: auto;
+    height: 100%;
+  }
+  .slider {
+    display: block;
+    background-color: #cc6969;
+    width: 410px;
+    height: 100%;
+    align-self: stretch;
+  }
+  .language2 {
+    order: 1;
+    margin-bottom: 30px;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 32px;
+  }
+  .main-container {
+    margin: 0;
+  }
+  .main-title {
+    padding: 0;
+    margin: 0 0 0 85px;
+    width: auto;
+  }
+  .main-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin-left: 97px;
+  }
+  .button {
+    margin: 0;
   }
 }
