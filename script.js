@@ -42,6 +42,13 @@ let switchSlide = () => {
   dot[currentIndex].style.backgroundColor = "#0EC261";
 };
 
+for (let i = 0; i < slides.length; i++) {
+  dot[i].onclick = function () {
+    currentIndex = i;
+    switchSlide();
+  };
+}
+
 slideControlLeft.onclick = function () {
   if (currentIndex === 0) {
     currentIndex = slides.length - 1;
