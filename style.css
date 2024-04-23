@@ -11,11 +11,8 @@
   main {
     flex-grow: 1;
   }
-  .wrapper {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  .desktop {
+    display: none;
   }
   .sidebar {
     display: none;
@@ -439,5 +436,205 @@
     margin-left: 97px;
     padding: 0;
     margin-top: 38px;
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    height: 100%;
+  }
+  .mobile {
+    display: none;
+  }
+  .desktop {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  .sidebar {
+    width: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+  }
+  .menu-icon {
+    width: 32px;
+    width: 32px;
+    margin: 0;
+    margin-top: 31px;
+    align-self: center;
+  }
+  .menu-icon::before,
+  .menu-icon::after,
+  .menu-icon span {
+    width: 32px;
+    margin: 0;
+  }
+  .language2 {
+    margin-left: 21px;
+  }
+  .container {
+    width: auto;
+    height: 100%;
+  }
+  .slider {
+    display: block;
+    width: 410px;
+    height: 100%;
+    flex-grow: 2;
+    align-self: stretch;
+    max-width: 688px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* .slide:first-child {
+    opacity: 1;
+  } */
+  .language2 {
+    order: 1;
+    margin-bottom: 30px;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 32px;
+    margin-right: 32px;
+    margin-left: 0;
+    height: calc(100% - 32px);
+    flex-grow: 1;
+  }
+  .main-container {
+    margin: 0;
+  }
+  .main-title {
+    padding: 0;
+    margin: 0 0 0 85px;
+    width: auto;
+  }
+  .main-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin-left: 97px;
+  }
+  .button {
+    margin: 60px 0 0 0;
+  }
+  .slide button {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    height: 48px;
+
+    color: #eeeeee;
+    margin: 32px 0 0 0;
+
+    background: linear-gradient(90deg, #13493f 0%, #0c7b1b 100%);
+    border-radius: 4px;
+  }
+  .main-footer {
+    height: auto;
+    margin-left: 97px;
+    margin-bottom: 32px;
+  }
+  .geo2 {
+    margin: 0;
+  }
+  a.tel {
+    margin-right: 0;
+  }
+  .slide h2 {
+    font-family: "Roboto";
+    font-style: normal;
+    font-size: 32px;
+    line-height: 38px;
+    margin: 0;
+    color: #ffffff;
+  }
+  .slide p {
+    font-family: "Roboto";
+    font-style: normal;
+    font-size: 22px;
+    line-height: 100%;
+    margin-bottom: 0;
+    /* or 22px */
+
+    color: #eeeeee;
+  }
+  .slide {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+    mix-blend-mode: normal;
+    position: absolute;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  .slide-content {
+    padding: 64px;
+  }
+  .slide0 {
+    background-image: url(img/slide-img-1.jpg);
+    background-position: 50% 0;
+  }
+  .slide1 {
+    background-image: url(img/slide-img-2.jpg);
+    background-position: 50% 0;
+  }
+  .slide2 {
+    background-image: url(img/slide-img-3.jpg);
+    background-position: 50% 0;
+  }
+  .slide3 {
+    background-image: url(img/slide-img-4.jpg);
+    background-position: 50% 0;
+  }
+  .left-button img {
+    transform: rotate(180deg);
+  }
+  .left-button {
+    position: absolute;
+    height: 100%;
+    background-color: #00000000;
+    z-index: 1;
+    width: 32px;
+    border: none;
+  }
+  .right-button {
+    position: absolute;
+    height: 100%;
+    background-color: #00000000;
+    border: none;
+    z-index: 1;
+    right: 0;
+    width: 32px;
+  }
+  .left-button:hover,
+  .right-button:hover {
+    background-color: #0ec26249;
+  }
+  .dots {
+    position: absolute;
+    bottom: 37px;
+    right: calc(50% - 28px);
+    display: flex;
+    justify-content: space-evenly;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 1;
   }
 }
