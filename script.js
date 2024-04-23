@@ -1,13 +1,14 @@
 //бургерное меню
 const iconMenu = document.querySelectorAll(".menu-icon");
 const menuBody = document.querySelector(".links");
-
+const desktop = document.querySelector(".desktop");
 for (let i = 0; i < iconMenu.length; i++) {
   if (iconMenu[i]) {
     iconMenu[i].addEventListener("click", function (e) {
       document.body.classList.toggle("lock");
       menuBody.classList.toggle("_active");
       iconMenu[i].classList.toggle("_active");
+      desktop.classList.toggle("blacked");
     });
   }
 }
@@ -30,15 +31,18 @@ let slideControlRight = document.querySelector(".right-button");
 let dot = document.querySelectorAll(".dot");
 
 slides[0].style.opacity = "1";
+slides[0].style.zIndex = "1";
 dot[0].style.backgroundColor = "#0EC261";
 let currentIndex = 0;
 
 let switchSlide = () => {
   for (let i = 0; i < slides.length; i++) {
     slides[i].style.opacity = "0";
+    slides[i].style.zIndex = "0";
     dot[i].style.backgroundColor = "#fff";
   }
   slides[currentIndex].style.opacity = "1";
+  slides[currentIndex].style.zIndex = "1";
   dot[currentIndex].style.backgroundColor = "#0EC261";
 };
 
