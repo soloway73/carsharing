@@ -1,0 +1,689 @@
+/* мобилка */
+@media (min-width: 1px) {
+  html,
+  body {
+    height: 100%;
+    padding: 0;
+  }
+  body {
+    font-family: "Roboto";
+  }
+  main {
+    flex-grow: 1;
+  }
+  .desktop {
+    display: none;
+  }
+  .sidebar {
+    display: none;
+  }
+  .main-nav {
+    display: block;
+    position: relative;
+    left: -100%;
+  }
+  .links {
+    position: fixed;
+    top: 0;
+    left: -130%;
+    width: 100%;
+    height: 100%;
+    background-color: #111518;
+    /* padding: 30px 30px 30px 0; */
+    transition: left 0.3s ease 0s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    z-index: 5;
+    overflow: auto;
+  }
+  .firstBlock {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  .links._active {
+    left: 0;
+  }
+  .links li {
+    list-style: none;
+  }
+  /* ПАРКОВКА СТРАХОВКА БЕНЗИН ОБСЛУЖИВАНИЕ */
+  .links a {
+    width: 182px;
+    height: 149px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 26px;
+
+    color: #ffffff;
+  }
+  .navigation {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 80px;
+    margin-left: 28px;
+    margin-right: auto;
+    margin-bottom: 38px;
+    height: 182px;
+    width: 149;
+  }
+  .links a:hover {
+    color: #0ec261;
+  }
+  .socials {
+    display: flex;
+    margin-bottom: auto;
+    width: 144px;
+    height: 32px;
+  }
+  .socials li:nth-child(2) {
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+  div.language {
+    display: block;
+    justify-self: end;
+    margin-bottom: 28px;
+    margin-left: 28px;
+    margin-top: 28px;
+    width: 30.35px;
+    height: 16px;
+    text-transform: none !important;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    color: #0ec261;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  .language2 {
+    display: none;
+  }
+  .container {
+    width: 288px;
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    margin: 16px;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+  .lock {
+    overflow: hidden;
+  }
+  .hidden {
+    display: none;
+  }
+  .menu-icon {
+    z-index: 5;
+    display: block;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .menu-icon::before,
+  .menu-icon::after,
+  .menu-icon span {
+    left: 0;
+    position: absolute;
+    height: 10%;
+    width: 100%;
+    transition: all 0.3s ease 0s;
+    background-color: #121212;
+  }
+  .menu-icon::before,
+  .menu-icon::after {
+    content: "";
+  }
+  .menu-icon::before {
+    top: 0;
+  }
+  .menu-icon::after {
+    bottom: 0;
+  }
+  .menu-icon span {
+    top: 50%;
+    transform: scale(1) translate(0px, -50%);
+  }
+  .menu-icon._active span {
+    transform: scale(0) translate(0px, -50%);
+  }
+  .menu-icon._active::before {
+    top: 50%;
+    transform: rotate(-45deg) translate(1px, -50%);
+    background-color: #ffffff;
+    width: 18px;
+  }
+  .menu-icon._active::after {
+    bottom: 50%;
+    transform: rotate(45deg) translate(0px, 50%);
+    background-color: #ffffff;
+    width: 18px;
+  }
+  h1 {
+    color: #0ec261;
+    font-size: 30px;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+  }
+  .geo {
+    display: flex;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+  .city {
+    /* Ульяновск */
+    font-family: "Roboto";
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #999999;
+    vertical-align: auto;
+    margin: 0;
+  }
+  .city:hover {
+    text-decoration: underline;
+  }
+  .geo img {
+    width: 15px;
+    height: 18px;
+    margin-right: 7px;
+  }
+  .geo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 16.5px;
+    margin-bottom: 34px;
+  }
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+  }
+  .main-container h2,
+  .main-container h3,
+  .main-container p {
+    margin: 0;
+  }
+  .main-container h2 {
+    font-size: 32px;
+    line-height: 100%;
+    color: #121212;
+  }
+  .main-container h2 span {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 100%;
+    color: #0ec261;
+  }
+  .main-container p {
+    /* Поминутная аренда авто твоего города */
+
+    font-size: 18px;
+    line-height: 21px;
+    color: #999999;
+    margin-top: 16px;
+  }
+  .slider {
+    display: none;
+  }
+  .button {
+    background: linear-gradient(90deg, #0ec261 2.61%, #039f67 112.6%);
+    background-blend-mode: darken;
+    border: none;
+
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+
+    color: #ffffff;
+  }
+  .order {
+    width: 100%;
+    height: 50px;
+    margin-top: 32px;
+    margin-bottom: auto;
+  }
+  .button:hover {
+    filter: brightness(90%);
+  }
+  .button:active {
+    filter: brightness(80%);
+  }
+  footer {
+    display: flex;
+    height: 150px;
+  }
+  .main-footer {
+    display: flex;
+    flex-direction: column;
+    background-color: #151b1f;
+    height: 72px;
+    width: 100%;
+    margin-top: auto;
+  }
+  .main-footer p {
+    font-style: normal;
+    font-size: 13px;
+    line-height: 15px;
+    color: #eeeeee;
+    margin-bottom: 16px;
+    margin-right: 16px;
+    margin-left: auto;
+    margin-top: 8px;
+  }
+  .main-footer a {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    color: #0ec261;
+    text-decoration: none;
+    margin-top: 16px;
+    margin-right: 16px;
+    margin-left: auto;
+  }
+  .geo2 {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .sidebar {
+    display: block;
+    background-color: #151b1f;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+
+    width: 86px;
+  }
+  .menu-icon {
+    width: 32px;
+    margin-top: 10px;
+  }
+
+  .menu-icon span,
+  .menu-icon::after,
+  .menu-icon::before {
+    background-color: #ffffff;
+    width: 100%;
+    margin-left: 10px;
+  }
+  h1 {
+    text-align: left;
+    left: 0;
+    top: 0;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+  .geo {
+    display: none;
+  }
+  .geo2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 16.5px;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+  .container {
+    width: calc(100% - 16px);
+  }
+  .main-title {
+    display: flex;
+    width: 100%;
+    height: 33px;
+    justify-content: space-between;
+    margin-left: 118px;
+    margin-right: 32.5px;
+    margin-top: 5px;
+  }
+  .geo2 img {
+    width: 15px;
+    height: 18px;
+    margin-right: 7px;
+  }
+  .main-container {
+    margin-left: 118px;
+    margin-top: 163px;
+  }
+  .main-container h2,
+  .main-container h2 span {
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 70px;
+  }
+  .main-container p {
+    font-size: 26px;
+    line-height: 30.47px;
+    margin-top: 34px;
+  }
+  /* Rectangle 3 */
+  .button {
+    border-radius: 8px;
+    width: 250px;
+    margin-left: 118px;
+  }
+  .main-footer {
+    background: none;
+    flex-direction: row;
+
+    margin-bottom: 42px;
+    height: auto;
+  }
+  .main-footer p {
+    order: -1;
+    margin-left: 59px;
+    font-size: 13px;
+    line-height: 15px;
+    color: #999999;
+    margin: 0;
+  }
+  .main-footer a {
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #121212;
+    margin-right: 36px;
+  }
+  div.language {
+    display: none;
+  }
+  .language2 {
+    order: -2;
+    z-index: 4;
+    display: block;
+    width: 30.35px;
+    text-transform: none !important;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    color: #0ec261;
+    margin-left: 29px;
+    margin-right: 59px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  .links {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 100%;
+  }
+  .navigation {
+    display: flex;
+    width: 579px;
+    height: 177px;
+    margin: auto auto 0 97px;
+  }
+  .socials {
+    margin-left: 97px;
+    padding: 0;
+    margin-top: 38px;
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    height: 100%;
+  }
+  .mobile {
+    display: none;
+  }
+  .desktop {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  .sidebar {
+    width: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+  }
+  .menu-icon {
+    width: 32px;
+    width: 32px;
+    margin: 0;
+    margin-top: 31px;
+    align-self: center;
+  }
+  .menu-icon::before,
+  .menu-icon::after,
+  .menu-icon span {
+    width: 32px;
+    margin: 0;
+  }
+  .language2 {
+    margin-left: 21px;
+  }
+  .navigation a {
+    font-size: 32px;
+  }
+  .button.more:hover {
+    filter: brightness(90%);
+  }
+  .button.more:active {
+    filter: brightness(80%);
+  }
+  .container {
+    width: auto;
+    height: 100%;
+  }
+  .slider {
+    display: block;
+    width: 410px;
+    height: 100%;
+    flex-grow: 2;
+    align-self: stretch;
+    max-width: 688px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* .slide:first-child {
+    opacity: 1;
+  } */
+  .language2 {
+    order: 1;
+    margin-bottom: 30px;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 32px;
+    margin-right: 32px;
+    margin-left: 0;
+    height: calc(100% - 32px);
+    flex-grow: 1;
+  }
+  .main-container {
+    margin: 0;
+  }
+  .main-title {
+    padding: 0;
+    margin: 0 0 0 85px;
+    width: auto;
+  }
+  .main-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin-left: 97px;
+  }
+  .button {
+    margin: 60px 0 0 0;
+  }
+  .slide button {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    height: 48px;
+
+    color: #eeeeee;
+    margin: 32px 0 0 0;
+
+    background: linear-gradient(90deg, #13493f 0%, #0c7b1b 100%);
+    border-radius: 4px;
+  }
+  .main-footer {
+    height: auto;
+    margin-left: 97px;
+    margin-bottom: 32px;
+  }
+  .geo2 {
+    margin: 0;
+  }
+  a.tel {
+    margin-right: 0;
+  }
+  .slide h2 {
+    font-family: "Roboto";
+    font-style: normal;
+    font-size: 32px;
+    line-height: 38px;
+    margin: 0;
+    color: #ffffff;
+  }
+  .slide p {
+    font-family: "Roboto";
+    font-style: normal;
+    font-size: 22px;
+    line-height: 100%;
+    margin-bottom: 0;
+    /* or 22px */
+
+    color: #eeeeee;
+  }
+  .slide {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+    mix-blend-mode: normal;
+    position: absolute;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s;
+    background-size: cover;
+  }
+  .slide-content {
+    padding: 64px;
+  }
+  .slide0 {
+    background-image: url(img/slide-img-1.jpg);
+    background-position: 50% 0;
+  }
+  .slide1 .button {
+    background: linear-gradient(90deg, #132949 0%, #0c7b67 100%);
+  }
+  .slide1 {
+    background-image: url(img/slide-img-2.jpg);
+    background-position: 50% 0;
+  }
+  .slide2 .button {
+    background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
+  }
+  .slide2 {
+    background-image: url(img/slide-img-3.jpg);
+    background-position: 50% 0;
+  }
+  .slide3 .button {
+    background: linear-gradient(90deg, #281349 0%, #720c7b 100%);
+  }
+  .slide3 {
+    background-image: url(img/slide-img-4.jpg);
+    background-position: 50% 0;
+  }
+  .left-button img {
+    transform: rotate(180deg);
+  }
+  .left-button {
+    position: absolute;
+    height: 100%;
+    background-color: #00000000;
+    z-index: 2;
+    width: 32px;
+    border: none;
+  }
+  .right-button {
+    position: absolute;
+    height: 100%;
+    background-color: #00000000;
+    border: none;
+    z-index: 2;
+    right: 0;
+    width: 32px;
+  }
+  .left-button:hover,
+  .right-button:hover {
+    background-color: #0ec26249;
+  }
+  .dots {
+    position: absolute;
+    bottom: 37px;
+    right: calc(50% - 28px);
+    display: flex;
+    justify-content: space-evenly;
+    gap: 8px;
+    z-index: 2;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 1;
+    cursor: pointer;
+  }
+  .links {
+    background: none;
+    display: flex;
+    flex-direction: row;
+  }
+  .navigation {
+    width: auto;
+  }
+  .firstBlock {
+    background-color: #111518;
+    flex-grow: 1;
+  }
+  .secondNavBlock {
+    background-color: #111518e7;
+    flex-grow: 2;
+    z-index: 6;
+    max-width: 688px;
+  }
+  .blacked {
+    background-color: #111518;
+  }
+}
