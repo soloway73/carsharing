@@ -1,4 +1,8 @@
 /* мобилка */
+.socials li:hover path {
+  fill: #0ec261;
+  cursor: pointer;
+}
 @media (min-width: 1px) {
   html,
   body {
