@@ -3,6 +3,10 @@
   fill: #0ec261;
   cursor: pointer;
 }
+
+button {
+  cursor: pointer;
+}
 @media (min-width: 1px) {
   html,
   body {
@@ -396,16 +400,17 @@
     background: none;
     flex-direction: row;
 
-    margin-bottom: 42px;
+    margin-bottom: 22px;
     height: auto;
   }
   .main-footer p {
     order: -1;
     margin-left: 59px;
     font-size: 13px;
-    line-height: 15px;
+    line-height: 48px;
     color: #999999;
     margin: 0;
+    vertical-align: middle;
   }
   .main-footer a {
     margin-top: auto;
@@ -416,6 +421,7 @@
   div.language {
     display: none;
   }
+
   .language2 {
     order: -2;
     z-index: 4;
@@ -426,9 +432,20 @@
     font-size: 13px;
     line-height: 15px;
     color: #0ec261;
-    margin-left: 29px;
+    margin-left: 19px;
     margin-right: 59px;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    line-height: 48px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    &:hover {
+      border: solid 1px #eeeeee;
+      border-radius: 50%;
+      margin-left: 19px;
+    }
   }
   .links {
     display: flex;
@@ -513,7 +530,25 @@
   } */
   .language2 {
     order: 1;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    margin-left: 8px;
+    &:hover {
+      border: solid 1px #eeeeee;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 15px;
+      margin-right: 8px;
+      margin-left: 8px;
+      line-height: 48px;
+      vertical-align: middle;
+      text-align: center;
+      cursor: pointer;
+      color: #eeeeee;
+    }
+    &:active {
+      color: #0ec261;
+    }
   }
   .container {
     display: flex;
@@ -560,7 +595,7 @@
   .main-footer {
     height: auto;
     margin-left: 97px;
-    margin-bottom: 32px;
+    margin-bottom: 15px;
   }
   .geo2 {
     margin: 0;
