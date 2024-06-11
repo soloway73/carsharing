@@ -726,3 +726,38 @@ button {
     background-color: #111518;
   }
 }
+
+/* ORDER PAGE */
+.breadcrumbs {
+  padding: 8px 0 8px 128px;
+  border-top: solid 1px #eeeeee;
+  border-bottom: solid 1px #eeeeee;
+  margin-top: 32px;
+}
+.breadcrumbs a {
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 700;
+  color: #999999;
+}
+
+.order-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-top: 32px;
+  margin-right: 0;
+  margin-left: 0;
+  height: calc(100% - 32px);
+  flex-grow: 1;
+}
+.breadcrumbs svg {
+  margin: 0 16px 0 16px;
+}
+.order-geo2 {
+  margin-right: 64px;
+}
+a.order-nav-active {
+  color: #0ec261;
+}
