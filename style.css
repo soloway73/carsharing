@@ -761,3 +761,192 @@ button {
 a.order-nav-active {
   color: #0ec261;
 }
+
+.choice {
+  padding-left: 132px;
+  max-width: 1056px;
+}
+.choice select {
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  #dropdown-menu {
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 0;
+    width: 200px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* display: none; */
+  }
+}
+/* НАПИСАЛА ЖЕЛЕЗКА */
+#dropdown-menu {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 200px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 5;
+  background-color: #eeeeee;
+}
+
+#dropdown-menu li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+#dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
+#input-dropdown:focus + #dropdown-menu {
+  display: block;
+}
+
+/* сверху писала железка */
+.location input {
+  border: none;
+  border-bottom: solid #999999 1px;
+  width: 224px;
+}
+.location {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+  text-align: right;
+  width: 345px;
+  gap: 13px;
+}
+.location span {
+  width: 9px;
+  height: 9px;
+  position: absolute;
+  right: 2px;
+  top: 11px;
+  cursor: pointer;
+}
+.location span::after {
+  position: absolute;
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-top: 1px solid #000;
+  transform: rotate(45deg);
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
+.location span::before {
+  position: absolute;
+  bottom: 6px;
+  right: 0;
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-bottom: 1px solid #000;
+  transform: rotate(-45deg);
+  cursor: pointer;
+}
+.location-city,
+.location-point {
+  position: relative;
+}
+.location li {
+  list-style: none;
+}
+.location label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #121212;
+}
+.location input::placeholder {
+  /* Начните вводить пункт ... */
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #999999;
+}
+.location p {
+  text-align: left;
+  margin-top: 29px;
+}
+.score {
+  max-width: 320px;
+  padding-right: 65px;
+  padding-left: 65px;
+  border-left: 1px solid #eeeeee;
+}
+.score h2 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: right;
+  color: #121212;
+  margin-top: 32px;
+}
+.scoreAdress {
+  display: flex;
+  flex-direction: row;
+  gap: 11px;
+}
+.scoreAdress p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: right;
+  color: #999999;
+  margin-top: auto;
+}
+.scoreAdress p:first-child {
+  /* Пункт выдачи */
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #121212;
+  text-wrap: nowrap;
+}
+
+.choiceAndScoreContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.scorePrice {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 16px;
+  line-height: 16px;
+  color: #121212;
+  margin-top: 32px;
+}
+.scoreBtn {
+  background: #eeeeee;
+  border-radius: 8px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+
+  color: #ffffff;
+  border: unset;
+  width: 100%;
+  height: 50px;
+}
