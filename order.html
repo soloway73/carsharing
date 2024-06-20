@@ -109,7 +109,47 @@
 
                   <a href="#">Итого</a>
                 </div>
-            
+               <div class="choiceAndScoreContainer">
+                <div class="choice">
+                  <div class="location">
+                    <div class="location-city">
+                   <label  for="input-dropdown">Город</label>
+                   <input type="text" id="input-dropdown" placeholder="Начните вводить город...">
+                     <ul id="dropdown-menu">
+                        <li>Ульяновск </li>
+                        <li>Самара</li>
+                        <li>Саратов</li>
+                        <li>Москва</li>
+                        <li>Санкт-Петербург</li>
+                        <li>Екатеринбург</li>
+                        <li>Новосибирск </li>
+                     </ul>
+                     <span id="cityCleanBtn"></span>
+
+                 </div>
+                 <div class="location-point">
+                    <label for="inputPoint">Пункт выдачи</label>
+                    <input type="text" placeholder="Начните вводить пункт..." id="inputPoint">
+                    <span id="pointCleanBtn"></span>
+                 </div>
+                 <p>Выбрать на карте:</p>
+                 <img src="img/mapplaceholder.jpg" alt="заглушка для карты" width="736" height="352">
+                  </div>
+                  <div class="model"></div>
+                  <div class="options"></div>
+                  <div class="result"></div>
+                </div>
+                <div class="score">
+                  <h2>Ваш заказ:</h2>
+                  <div class="scoreAdress">
+                    <p>Пункт выдачи</p>
+                    <p>......................</p>
+                    <p>Ульяновск, Нариманова 42</p>
+                  </div>
+                  <p class="scorePrice"><b>Цена: </b>от 8 000 до 12 000 ₽</p>
+                  <button type="button" class="scoreBtn nextToModel">Выбрать модель</button>
+                </div>
+               </div>
               <footer>
 
               </footer>
@@ -125,6 +165,6 @@
 
       </footer>
     </div>
-    <script src="script.js" type="text/javascript"></script>
+    <script src="order-script.js" type="text/javascript"></script>
   </body>
 </html>

@@ -30,9 +30,9 @@ let slideControlLeft = document.querySelector(".left-button");
 let slideControlRight = document.querySelector(".right-button");
 let dot = document.querySelectorAll(".dot");
 
-slides[0].style.opacity = "1";
-slides[0].style.zIndex = "1";
-dot[0].style.backgroundColor = "#0EC261";
+slides[0]?.style?.opacity = "1";
+slides[0]?.style?.zIndex = "1";
+dot[0]?.style?.backgroundColor = "#0EC261";
 let currentIndex = 0;
 
 let switchSlide = () => {
