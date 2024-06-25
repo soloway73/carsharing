@@ -785,7 +785,8 @@ a.order-nav-active {
   position: absolute;
   top: 5px;
   right: 0;
-  width: 200px;
+  padding: 0;
+  width: 230px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: none;
@@ -822,7 +823,7 @@ a.order-nav-active {
   flex-direction: column;
   margin-top: 25px;
   text-align: right;
-  width: 345px;
+
   gap: 13px;
 }
 .location span {
@@ -832,6 +833,7 @@ a.order-nav-active {
   right: 2px;
   top: 11px;
   cursor: pointer;
+  display: none;
 }
 .location span::after {
   position: absolute;
@@ -858,6 +860,10 @@ a.order-nav-active {
 .location-city,
 .location-point {
   position: relative;
+  margin-right: auto;
+}
+.location-city label {
+  padding-left: 55px;
 }
 .location li {
   list-style: none;
@@ -886,6 +892,7 @@ a.order-nav-active {
   padding-right: 65px;
   padding-left: 65px;
   border-left: 1px solid #eeeeee;
+  height: calc(100dvh - 134px);
 }
 .score h2 {
   font-family: "Roboto";
