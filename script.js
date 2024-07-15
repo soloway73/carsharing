@@ -71,3 +71,4 @@ slideControlRight.onclick = function () {
     switchSlide();
   }
 };
+
