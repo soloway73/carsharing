@@ -138,7 +138,36 @@ const carsArray = [
     price: 9000,
   },
 ];
-
+const citiesArray = [
+  {
+    id: 1,
+    name: "Ульяновск",
+  },
+  {
+    id: 2,
+    name: "Москва",
+  },
+  {
+    id: 3,
+    name: "Санкт-Петербург",
+  },
+  {
+    id: 4,
+    name: "Екатеринбург",
+  },
+  {
+    id: 5,
+    name: "Новосибирск",
+  },
+  {
+    id: 6,
+    name: "Самара",
+  },
+  {
+    id: 7,
+    name: "Саратов",
+  },
+];
 const pointsArray = [
   {
     id: 1,
@@ -218,14 +247,34 @@ function getminMaxPrice(inputValue) {
 window.onload = () => {
   const dropdownMenu = document.getElementById("dropdown-menu");
   const inputDropdown = document.getElementById("input-dropdown");
-  const menuItems = dropdownMenu.querySelectorAll("li");
   const cityCrossBtn = document.getElementById("cityCleanBtn");
   const pointCrossBtn = document.getElementById("pointCleanBtn");
   const score = document.querySelector(".score");
   const adressOfPoint = score.querySelector(".adressOfPoint");
   const scorePrice = score.querySelector(".scorePrice");
+  const inputPoint = document.getElementById("inputPoint");
+  const pointsDropDownMenu = document.getElementById("pointsDropDownMenu");
 
   //появление меню
+  let createItems = () => {
+    for (let i = 0; i < citiesArray.length; i++) {
+      let item = document.createElement("li");
+      item.textContent = citiesArray[i].name;
+      dropdownMenu.appendChild(item);
+    }
+  };
+  createItems();
+  let createPoints = () => {
+    pointsArray.filter((point) => {
+      if (point.city.includes(inputDropdown.value)) {
+        let item = document.createElement("li");
+        item.textContent = point.adress;
+        pointsDropDownMenu.appendChild(item);
+      }
+    });
+  };
+  createPoints();
+  const menuItems = dropdownMenu.querySelectorAll("li");
   function filtration() {
     menuItems.forEach((menuItem) => {
       if (
@@ -258,6 +307,7 @@ window.onload = () => {
   inputDropdown.addEventListener("input", (event) => {
     crossBtnStatusChecker();
     filtration();
+    inputPoint.disabled = true;
   });
 
   // закрываем выпадающий список кликом на любой элемент вне выпадающего списка
@@ -281,14 +331,16 @@ window.onload = () => {
       crossBtnStatusChecker();
       adressOfPoint.textContent = event.target.textContent;
       scorePrice.textContent = getminMaxPrice(event.target.textContent);
+      inputPoint.disabled = false;
     }
   });
 
   // очистка поля ввода крестиком
 
   cityCrossBtn.addEventListener("click", () => {
-    document.getElementById("input-dropdown").value = "";
+    inputDropdown.value = "";
     cityCrossBtn.style.display = "none";
+    inputPoint.value = "";
   });
   pointCrossBtn.addEventListener("click", () => {
     document.getElementById("inputPoint").value = "";
