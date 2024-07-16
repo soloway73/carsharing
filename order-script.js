@@ -241,6 +241,12 @@ const pointsArray = [
     adress: "К. Маркса 50",
     carsId: [1, 2, 6],
   },
+  {
+    id: 13,
+    city: "Москва",
+    adress: "Энтузиастов 26",
+    carsId: [1, 2, 3, 4, 7],
+  },
 ];
 
 function getminMaxPrice(city) {
