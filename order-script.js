@@ -185,7 +185,7 @@ const pointsArray = [
     id: 3,
     city: "Ульяновск",
     adress: "Созидаителей 15",
-    carsId: [1, 2, 3, 6],
+    carsId: [1, 2, 3],
   },
   {
     id: 4,
@@ -214,22 +214,40 @@ const pointsArray = [
   {
     id: 8,
     city: "Саратов",
-    adress: "Ленина 10",
+    adress: "Горького 74",
     carsId: [1, 3],
   },
   {
     id: 9,
     city: "Самара",
-    adress: "Пушкина 11",
+    adress: "Л. Толстого 15",
     carsId: [1, 7],
+  },
+  {
+    id: 10,
+    city: "Саратов",
+    adress: "Клубная 5",
+    carsId: [1, 6],
+  },
+  {
+    id: 11,
+    city: "Самара",
+    adress: "К. Маркса 50",
+    carsId: [1, 6],
+  },
+  {
+    id: 12,
+    city: "Новосибирск",
+    adress: "К. Маркса 50",
+    carsId: [1, 2, 6],
   },
 ];
 
-function getminMaxPrice(inputValue) {
+function getminMaxPrice(city) {
   let min = carsArray[0].price;
   let max = carsArray[0].price;
   for (let i = 0; i < pointsArray.length; i++) {
-    if (pointsArray[i].city.includes(inputValue)) {
+    if (pointsArray[i].city.includes(city)) {
       pointsArray[i].carsId.forEach((carId) => {
         if (carsArray[carId - 1].price < min) {
           min = carsArray[carId - 1].price;
@@ -240,10 +258,25 @@ function getminMaxPrice(inputValue) {
       });
     }
   }
-
   return "от " + min + " до " + max;
 }
 
+function getminMaxPriceInPoint(pointAdress) {
+  let min = 400000;
+  let max = 0;
+  let currentPoint = pointsArray.find((point) => point.adress === pointAdress);
+  if (currentPoint) {
+    currentPoint.carsId.forEach((carId) => {
+      if (carsArray[carId - 1].price < min) {
+        min = carsArray[carId - 1].price;
+      }
+      if (carsArray[carId - 1].price > max) {
+        max = carsArray[carId - 1].price;
+      }
+    });
+  }
+  return "от " + min + " до " + max;
+}
 window.onload = () => {
   const dropdownMenu = document.getElementById("dropdown-menu");
   const inputDropdown = document.getElementById("input-dropdown");
@@ -256,15 +289,14 @@ window.onload = () => {
   const pointsDropDownMenu = document.getElementById("pointsDropDownMenu");
 
   //появление меню
-  let createItems = () => {
+  function createCities() {
     for (let i = 0; i < citiesArray.length; i++) {
       let item = document.createElement("li");
       item.textContent = citiesArray[i].name;
       dropdownMenu.appendChild(item);
     }
-  };
-  createItems();
-  let createPoints = () => {
+  }
+  function createPoints() {
     pointsArray.filter((point) => {
       if (point.city.includes(inputDropdown.value)) {
         let item = document.createElement("li");
@@ -272,10 +304,11 @@ window.onload = () => {
         pointsDropDownMenu.appendChild(item);
       }
     });
-  };
-  createPoints();
-  const menuItems = dropdownMenu.querySelectorAll("li");
+  }
+  createCities();
+
   function filtration() {
+    const menuItems = dropdownMenu.querySelectorAll("li");
     menuItems.forEach((menuItem) => {
       if (
         menuItem.textContent
@@ -288,28 +321,50 @@ window.onload = () => {
       }
     });
   }
-
-  function crossBtnStatusChecker() {
-    if (inputDropdown.value === "") {
-      cityCrossBtn.style.display = "none";
+  function pointFiltration() {
+    const menuItems = pointsDropDownMenu.querySelectorAll("li");
+    menuItems.forEach((menuItem) => {
+      if (
+        menuItem.textContent
+          .toLowerCase()
+          .includes(inputPoint.value.toLowerCase())
+      ) {
+        menuItem.style.display = "block";
+      } else {
+        menuItem.style.display = "none";
+      }
+    });
+  }
+  function crossBtnStatusChecker(input, btn) {
+    if (input.value === "") {
+      btn.style.display = "none";
     } else {
-      cityCrossBtn.style.display = "block";
+      btn.style.display = "block";
     }
   }
-
+  // появление меню по фокусу
   inputDropdown.addEventListener("focus", () => {
-    crossBtnStatusChecker();
-    dropdownMenu.style.display = "block";
+    crossBtnStatusChecker(inputDropdown, cityCrossBtn);
     filtration();
+    dropdownMenu.style.display = "block";
+  });
+  inputPoint.addEventListener("focus", () => {
+    crossBtnStatusChecker(inputPoint, pointCrossBtn);
+    createPoints();
+    pointsDropDownMenu.style.display = "block";
+    pointFiltration();
   });
 
   //фильтр по вводу, который скрывает элменты, которые не содержат введенное значение
   inputDropdown.addEventListener("input", (event) => {
-    crossBtnStatusChecker();
+    crossBtnStatusChecker(inputDropdown, cityCrossBtn);
     filtration();
     inputPoint.disabled = true;
   });
-
+  inputPoint.addEventListener("input", (event) => {
+    crossBtnStatusChecker(inputPoint, pointCrossBtn);
+    pointFiltration();
+  });
   // закрываем выпадающий список кликом на любой элемент вне выпадающего списка
   document.addEventListener("click", (event) => {
     if (
@@ -321,17 +376,42 @@ window.onload = () => {
     ) {
       dropdownMenu.style.display = "none";
     }
+    if (
+      !pointsDropDownMenu.contains(event.target) &&
+      !Array.from(pointsDropDownMenu.children).some((li) =>
+        li.contains(event.target)
+      ) &&
+      !inputPoint.contains(event.target)
+    ) {
+      while (pointsDropDownMenu.hasChildNodes()) {
+        pointsDropDownMenu.removeChild(pointsDropDownMenu.lastChild);
+      }
+      pointsDropDownMenu.style.display = "none";
+    }
   });
-
   // переносим значение выбранного элемента списка в поле ввода
   dropdownMenu.addEventListener("click", (event) => {
     if (event.target.tagName === "LI") {
       inputDropdown.value = event.target.textContent;
       dropdownMenu.style.display = "none";
-      crossBtnStatusChecker();
+      crossBtnStatusChecker(inputDropdown, cityCrossBtn);
       adressOfPoint.textContent = event.target.textContent;
       scorePrice.textContent = getminMaxPrice(event.target.textContent);
       inputPoint.disabled = false;
+      while (pointsDropDownMenu.hasChildNodes()) {
+        pointsDropDownMenu.removeChild(pointsDropDownMenu.lastChild);
+      }
+    }
+  });
+
+  //переносим значение выбранного элемента списка в поле ввода
+  pointsDropDownMenu.addEventListener("click", (event) => {
+    if (event.target.tagName === "LI") {
+      inputPoint.value = event.target.textContent;
+      pointsDropDownMenu.style.display = "none";
+      crossBtnStatusChecker(inputPoint, pointCrossBtn);
+      scorePrice.textContent = getminMaxPriceInPoint(inputPoint.value);
+      adressOfPoint.textContent = inputDropdown.value + ", " + inputPoint.value;
     }
   });
 
@@ -340,10 +420,20 @@ window.onload = () => {
   cityCrossBtn.addEventListener("click", () => {
     inputDropdown.value = "";
     cityCrossBtn.style.display = "none";
+    pointCrossBtn.style.display = "none";
     inputPoint.value = "";
+    inputPoint.disabled = true;
+    while (pointsDropDownMenu.hasChildNodes()) {
+      pointsDropDownMenu.removeChild(pointsDropDownMenu.lastChild);
+    }
+    scorePrice.textContent = "...";
+    adressOfPoint.textContent = "не выбран";
   });
   pointCrossBtn.addEventListener("click", () => {
     document.getElementById("inputPoint").value = "";
+    pointCrossBtn.style.display = "none";
+    adressOfPoint.textContent = inputDropdown.value;
+    scorePrice.textContent = getminMaxPrice(adressOfPoint.textContent);
   });
 
   // бургерное меню
