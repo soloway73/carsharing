@@ -293,6 +293,7 @@ window.onload = () => {
   const scorePrice = score.querySelector(".scorePrice");
   const inputPoint = document.getElementById("inputPoint");
   const pointsDropDownMenu = document.getElementById("pointsDropDownMenu");
+  const scoreBtn = document.getElementById("scoreBtn");
 
   //появление меню
   function createCities() {
@@ -366,10 +367,12 @@ window.onload = () => {
     crossBtnStatusChecker(inputDropdown, cityCrossBtn);
     filtration();
     inputPoint.disabled = true;
+    scoreBtn.disabled = true;
   });
   inputPoint.addEventListener("input", (event) => {
     crossBtnStatusChecker(inputPoint, pointCrossBtn);
     pointFiltration();
+    scoreBtn.disabled = true;
   });
   // закрываем выпадающий список кликом на любой элемент вне выпадающего списка
   document.addEventListener("click", (event) => {
@@ -418,6 +421,10 @@ window.onload = () => {
       crossBtnStatusChecker(inputPoint, pointCrossBtn);
       scorePrice.textContent = getminMaxPriceInPoint(inputPoint.value);
       adressOfPoint.textContent = inputDropdown.value + ", " + inputPoint.value;
+      while (pointsDropDownMenu.lastElementChild) {
+        pointsDropDownMenu.removeChild(pointsDropDownMenu.lastElementChild);
+      }
+      scoreBtn.disabled = false;
     }
   });
 
@@ -434,12 +441,14 @@ window.onload = () => {
     }
     scorePrice.textContent = "...";
     adressOfPoint.textContent = "не выбран";
+    scoreBtn.disabled = true;
   });
   pointCrossBtn.addEventListener("click", () => {
     document.getElementById("inputPoint").value = "";
     pointCrossBtn.style.display = "none";
     adressOfPoint.textContent = inputDropdown.value;
     scorePrice.textContent = getminMaxPrice(adressOfPoint.textContent);
+    scoreBtn.disabled = true;
   });
 
   // бургерное меню
