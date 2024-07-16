@@ -142,30 +142,37 @@ const citiesArray = [
   {
     id: 1,
     name: "Ульяновск",
+    geoposition: [54.314192, 48.403132],
   },
   {
     id: 2,
     name: "Москва",
+    geoposition: [55.755864, 37.617698],
   },
   {
     id: 3,
     name: "Санкт-Петербург",
+    geoposition: [59.938784, 30.314997],
   },
   {
     id: 4,
     name: "Екатеринбург",
+    geoposition: [56.838011, 60.597474],
   },
   {
     id: 5,
     name: "Новосибирск",
+    geoposition: [55.030204, 82.92043],
   },
   {
     id: 6,
     name: "Самара",
+    geoposition: [53.195878, 50.100202],
   },
   {
     id: 7,
     name: "Саратов",
+    geoposition: [53.195878, 50.100202],
   },
 ];
 const pointsArray = [
@@ -174,78 +181,91 @@ const pointsArray = [
     city: "Ульяновск",
     adress: "Нариманова 42",
     carsId: [1, 5, 7],
+    geoposition: [54.337458, 48.382399],
   },
   {
     id: 2,
     city: "Ульяновск",
     adress: "Локомотивная 15",
     carsId: [2, 3, 6],
+    geoposition: [54.287344, 48.362816],
   },
   {
     id: 3,
     city: "Ульяновск",
     adress: "Созидаителей 15",
     carsId: [1, 2, 3],
+    geoposition: [54.366156, 48.589083],
   },
   {
     id: 4,
     city: "Москва",
     adress: "Краснопресненская 10",
     carsId: [1, 2, 3, 4, 5, 6, 7],
+    geoposition: [55.75478, 37.563718],
   },
   {
     id: 5,
     city: "Санкт-Петербург",
-    adress: "Косыгина 10",
+    adress: "Косыгина 4",
     carsId: [2, 3, 4, 5, 7],
+    geoposition: [59.940835, 30.456176],
   },
   {
     id: 6,
     city: "Екатеринбург",
     adress: "Ленина 10",
     carsId: [1, 2, 5, 6, 7],
+    geoposition: [56.836337, 60.58735],
   },
   {
     id: 7,
     city: "Новосибирск",
     adress: "Почтовая 10",
     carsId: [1, 2, 3, 4],
+    geoposition: [55.051061, 83.009264],
   },
   {
     id: 8,
     city: "Саратов",
     adress: "Горького 74",
     carsId: [1, 3],
+    geoposition: [51.539803, 46.03564],
   },
   {
     id: 9,
     city: "Самара",
     adress: "Л. Толстого 15",
     carsId: [1, 7],
+    geoposition: [53.192727, 50.0913],
   },
   {
     id: 10,
     city: "Саратов",
     adress: "Клубная 5",
     carsId: [1, 6],
+    geoposition: [51.610678, 45.91055],
   },
   {
     id: 11,
     city: "Самара",
-    adress: "К. Маркса 50",
+    adress: "К. Маркса 49",
     carsId: [1, 6],
+    geoposition: [53.196461, 50.149169],
   },
   {
     id: 12,
     city: "Новосибирск",
-    adress: "К. Маркса 50",
+    adress: "К. Маркса 51",
     carsId: [1, 2, 6],
+    geoposition: [54.991372, 82.909407],
   },
   {
     id: 13,
     city: "Москва",
     adress: "Энтузиастов 26",
     carsId: [1, 2, 3, 4, 7],
+    geoposition: [55.750945, 37.719378],
   },
 ];
 
@@ -282,6 +302,26 @@ function getminMaxPriceInPoint(pointAdress) {
     });
   }
   return "от " + min + " до " + max;
+}
+function generateRandomPhoneNumber() {
+  let phone = "+7";
+  let code = Math.floor(Math.random() * 999)
+    .toString()
+    .padStart(4, "0");
+  phone += "(" + code;
+  code = Math.floor(Math.random() * 99)
+    .toString()
+    .padStart(2, "0");
+  phone += ")" + code;
+  code = Math.floor(Math.random() * 99)
+    .toString()
+    .padStart(2, "0");
+  phone += "-" + code;
+  code = Math.floor(Math.random() * 99)
+    .toString()
+    .padStart(2, "0");
+  phone += "-" + code;
+  return phone;
 }
 window.onload = () => {
   const dropdownMenu = document.getElementById("dropdown-menu");
@@ -410,6 +450,7 @@ window.onload = () => {
       while (pointsDropDownMenu.hasChildNodes()) {
         pointsDropDownMenu.removeChild(pointsDropDownMenu.lastChild);
       }
+      setCityPan();
     }
   });
 
@@ -425,6 +466,7 @@ window.onload = () => {
         pointsDropDownMenu.removeChild(pointsDropDownMenu.lastElementChild);
       }
       scoreBtn.disabled = false;
+      setPointPan();
     }
   });
 
@@ -473,6 +515,91 @@ window.onload = () => {
       menuBody.classList.remove("_active");
       iconMenu.classList.remove("_active");
       document.body.classList.remove("lock");
+    });
+  }
+
+  function getCityLocation() {
+    let position = [];
+    citiesArray.forEach((city) => {
+      if (city.name === inputDropdown.value) {
+        position = city.geoposition;
+      }
+    });
+
+    return position;
+  }
+
+  function getPointPosition() {
+    let position = [];
+    pointsArray.forEach((point) => {
+      if (
+        point.city === inputDropdown.value &&
+        point.adress === inputPoint.value
+      ) {
+        position = point.geoposition;
+      }
+    });
+    return position;
+  }
+
+  // карта
+  ymaps.ready(init);
+  let myMap;
+  function setCityPan() {
+    let point = getCityLocation();
+    // Плавное перемещение центра карты в точку с новыми координатами.
+    myMap.panTo(point, {
+      // Задержка между перемещениями.
+      delay: 1500,
+    });
+  }
+
+  function setPointPan() {
+    let point = getPointPosition();
+    myMap.panTo(point, {
+      delay: 1500,
+    });
+  }
+  function init() {
+    // Создание карты.
+    myMap = new ymaps.Map("map", {
+      center: [54.314192, 48.403132],
+      zoom: 12,
+    });
+    pointsArray.forEach((point) => {
+      var myPlacemark = new ymaps.Placemark(
+        point.geoposition,
+        {
+          balloonContentHeader: "Need for Drive",
+          balloonContentBody: point.city + ", " + point.adress,
+          balloonContentFooter: generateRandomPhoneNumber(),
+          hintContent: point.city + ", " + point.adress,
+        },
+        {
+          iconLayout: "default#image",
+          iconImageHref: "img/mapMark.png",
+          iconImageSize: [25, 25],
+          iconImageOffset: [-10, -12],
+        }
+      );
+
+      myMap.geoObjects.add(myPlacemark);
+      myPlacemark.events.add("click", function () {
+        inputDropdown.value = point.city;
+        inputPoint.value = point.adress;
+        crossBtnStatusChecker(inputDropdown, cityCrossBtn);
+        crossBtnStatusChecker(inputPoint, pointCrossBtn);
+        scorePrice.textContent = getminMaxPrice(point.adress);
+        adressOfPoint.textContent = point.city + ", " + point.adress;
+        scoreBtn.disabled = false;
+        inputPoint.disabled = false;
+        pointsDropDownMenu.style.display = "none";
+        while (pointsDropDownMenu.hasChildNodes()) {
+          pointsDropDownMenu.removeChild(pointsDropDownMenu.lastChild);
+        }
+        scorePrice.textContent = getminMaxPriceInPoint(point.adress);
+        adressOfPoint.textContent = point.city + ", " + point.adress;
+      });
     });
   }
 };

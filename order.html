@@ -11,6 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="style.css" rel="stylesheet" />
     <title>Need for drive</title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=07aa1514-a832-4cb0-9ab8-4cf8895c8e22&lang=ru_RU" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+</script>
   </head>
   <body>
     
@@ -116,13 +120,6 @@
                    <label  for="input-dropdown">Город</label>
                    <input type="text" id="input-dropdown" autocomplete="off" placeholder="Начните вводить город...">
                      <ul id="dropdown-menu">
-                        <!-- <li>Ульяновск</li>
-                        <li>Самара</li>
-                        <li>Саратов</li>
-                        <li>Москва</li>
-                        <li>Санкт-Петербург</li>
-                        <li>Екатеринбург</li>
-                        <li>Новосибирск</li> -->
                      </ul>
                      <span id="cityCleanBtn"></span>
 
@@ -134,7 +131,7 @@
                     <span id="pointCleanBtn"></span>
                  </div>
                  <p>Выбрать на карте:</p>
-                 <img src="img/mapplaceholder.jpg" alt="заглушка для карты" width="90%" height="auto">
+                 <div id="map" style="width: 736px; height: 352px;"></div>
                   </div>
                   <div class="model"></div>
                   <div class="options"></div>
@@ -165,5 +162,6 @@
       </footer>
     </div>
     <script src="order-script.js" type="text/javascript"></script>
+    
   </body>
 </html>
