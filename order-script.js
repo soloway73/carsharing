@@ -334,7 +334,18 @@ window.onload = () => {
   const inputPoint = document.getElementById("inputPoint");
   const pointsDropDownMenu = document.getElementById("pointsDropDownMenu");
   const scoreBtn = document.getElementById("scoreBtn");
+  const location = document.querySelector(".location");
+  const model = document.querySelector(".model");
+  const options = document.querySelector(".options");
+  const result = document.querySelector(".result");
 
+  scoreBtn.addEventListener("click", () => {
+    scoreBtn.disabled = true;
+    if (scoreBtn.textContent === "Выбрать модель") {
+      location.classList.add("hidden");
+      model.classList.remove("hidden");
+    }
+  });
   //появление меню
   function createCities() {
     for (let i = 0; i < citiesArray.length; i++) {
@@ -602,4 +613,5 @@ window.onload = () => {
       });
     });
   }
+  // переключение хлебных крошек
 };

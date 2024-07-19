@@ -130,7 +130,7 @@ button {
     overflow: hidden;
   }
   .hidden {
-    display: none;
+    display: none !important;
   }
   .menu-icon {
     z-index: 5;
