@@ -115,7 +115,8 @@
                 </div>
                <div class="choiceAndScoreContainer">
                 <div class="choice">
-                  <div class="location">
+                 <!-- Убрать класс!! -->
+                  <div class="location"> 
                     <div class="location-city">
                    <label  for="input-dropdown">Город</label>
                    <input type="text" id="input-dropdown" autocomplete="off" placeholder="Начните вводить город...">
@@ -133,9 +134,24 @@
                  <p>Выбрать на карте:</p>
                  <div id="map" style="width: 736px; height: 352px;"></div>
                   </div>
-                  <div class="model"></div>
-                  <div class="options"></div>
-                  <div class="result"></div>
+                  <div class="model hidden">
+                    <input type="radio" name="sortModels" id="allModel">
+                    <label for="allModel">Все модели</label>
+                    <input type="radio" name="sortModels" id="economic">
+                    <label for="economic">Эконом</label>
+                    <input type="radio" name="sortModels" id="premium">
+                    <label for="premium">Премиум</label>
+                   
+                    <div class="carCards">
+                      <div class="carCard">
+                        <h2 class="carModel">i30 N</h2>
+                        <p class="carPrice">10 000 - 32 000 ₽</p>
+                        <img src="img/i30n.png" alt="hyundai i30n" width="256" height="auto">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="options hidden">страница опций</div>
+                  <div class="result hidden">страница ИТОГО</div>
                 </div>
                 <div class="score">
                   <h2>Ваш заказ:</h2>
@@ -145,7 +161,7 @@
                     <p class="adressOfPoint">не выбран</p>
                   </div>
                   <p><b>Цена: </b><span class="scorePrice">...</span></p>
-                  <button type="button" class="scoreBtn nextToModel" id="scoreBtn" disabled>Выбрать модель</button>
+                  <button type="button" class="scoreBtn" id="scoreBtn" disabled>Выбрать модель</button>
                 </div>
                </div>
              
