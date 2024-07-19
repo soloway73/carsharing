@@ -102,40 +102,47 @@ const carsArray = [
     id: 1,
     name: "Vesta",
     price: 7000,
+    img: "img/vesta.png",
   },
   {
     id: 2,
     name: "Hyundai i30",
     price: 12000,
+    img: "img/i30n.png",
   },
   {
     id: 3,
     name: "Nissan Qashqai",
     price: 15000,
+    img: "img/qashqai.png",
   },
 
   {
     id: 4,
-    name: "Toyota Camry",
+    name: "Creta",
     price: 20000,
+    img: "img/creta.png",
   },
 
   {
     id: 5,
     name: "Skoda Octavia",
     price: 14000,
+    img: "img/octavia.png",
   },
 
   {
     id: 6,
-    name: "Renault Logan",
+    name: "Elantra",
     price: 6000,
+    img: "img/elantra.png",
   },
 
   {
     id: 7,
     name: "Solaris",
     price: 9000,
+    img: "img/solaris.png",
   },
 ];
 const citiesArray = [
@@ -270,8 +277,8 @@ const pointsArray = [
 ];
 
 function getminMaxPrice(city) {
-  let min = carsArray[0].price;
-  let max = carsArray[0].price;
+  let min = 999999;
+  let max = 0;
   for (let i = 0; i < pointsArray.length; i++) {
     if (pointsArray[i].city.includes(city)) {
       pointsArray[i].carsId.forEach((carId) => {
@@ -338,14 +345,62 @@ window.onload = () => {
   const model = document.querySelector(".model");
   const options = document.querySelector(".options");
   const result = document.querySelector(".result");
-
+  const carCards = document.querySelector(".carCards");
+  //переключение кнопок
   scoreBtn.addEventListener("click", () => {
     scoreBtn.disabled = true;
+
     if (scoreBtn.textContent === "Выбрать модель") {
+      let pointIndex = pointsArray.findIndex(
+        (point) =>
+          point.city === inputDropdown.value &&
+          point.adress === inputPoint.value
+      );
+
+      console.log(pointIndex);
       location.classList.add("hidden");
       model.classList.remove("hidden");
+      carCards.innerHTML = "";
+      renderModels(pointIndex);
+      scoreBtn.textContent = "Дополнительно";
+      return;
+    }
+    if (scoreBtn.textContent === "Дополнительно") {
+      model.classList.add("hidden");
+      options.classList.remove("hidden");
+      scoreBtn.textContent = "Итого";
+      return;
+    }
+    if (scoreBtn.textContent === "Итого") {
+      options.classList.add("hidden");
+      result.classList.remove("hidden");
+      scoreBtn.textContent = "Заказать";
+      return;
     }
   });
+  function renderModels(pointId) {
+    carCards.innerHTML = "";
+    pointsArray[pointId].carsId.forEach((carId) => {
+      let car = carsArray[carId - 1];
+      let carCard = document.createElement("div");
+      carCard.classList.add("carCard");
+      let carName = document.createElement("h2");
+      carName.classList.add("carModel");
+      carName.textContent = car.name;
+      carCard.appendChild(carName);
+      let carPrice = document.createElement("p");
+      carPrice.classList.add("carPrice");
+      carPrice.textContent = car.price + " ₽.";
+      carCard.appendChild(carPrice);
+      let carImg = document.createElement("img");
+      carImg.classList.add("carImg");
+      carImg.alt = car.name;
+      carImg.width = "256";
+      carImg.src = car.img;
+      carCard.appendChild(carImg);
+      carCards.appendChild(carCard);
+    });
+  }
   //появление меню
   function createCities() {
     for (let i = 0; i < citiesArray.length; i++) {

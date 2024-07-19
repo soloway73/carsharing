@@ -115,7 +115,8 @@
                 </div>
                <div class="choiceAndScoreContainer">
                 <div class="choice">
-                  <div class="location">
+                 <!-- Убрать класс!! -->
+                  <div class="location"> 
                     <div class="location-city">
                    <label  for="input-dropdown">Город</label>
                    <input type="text" id="input-dropdown" autocomplete="off" placeholder="Начните вводить город...">
@@ -134,7 +135,20 @@
                  <div id="map" style="width: 736px; height: 352px;"></div>
                   </div>
                   <div class="model hidden">
-                    <p>Страница модели </p>
+                    <input type="radio" name="sortModels" id="allModel">
+                    <label for="allModel">Все модели</label>
+                    <input type="radio" name="sortModels" id="economic">
+                    <label for="economic">Эконом</label>
+                    <input type="radio" name="sortModels" id="premium">
+                    <label for="premium">Премиум</label>
+                   
+                    <div class="carCards">
+                      <div class="carCard">
+                        <h2 class="carModel">i30 N</h2>
+                        <p class="carPrice">10 000 - 32 000 ₽</p>
+                        <img src="img/i30n.png" alt="hyundai i30n" width="256" height="auto">
+                      </div>
+                    </div>
                   </div>
                   <div class="options hidden">страница опций</div>
                   <div class="result hidden">страница ИТОГО</div>

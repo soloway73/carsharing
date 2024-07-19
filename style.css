@@ -981,3 +981,53 @@ a.order-nav-active {
 .location ul {
   display: none;
 }
+.model input {
+  margin-top: 48px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+
+  /* Black */
+  color: #121212;
+}
+.carCards {
+  margin-top: 48px;
+}
+.carCard {
+  display: flex;
+  flex-direction: column;
+
+  width: 369px;
+  height: 224px;
+  border: solid 1px #cfcfcf;
+  padding-left: 16px;
+}
+.carCard h2 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+
+  /* Black */
+  color: #121212;
+  margin-bottom: 0;
+}
+.carCard p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #999999;
+  margin-top: 0;
+}
+.carCard img {
+  margin: 0;
+  padding: 0;
+  margin-left: auto;
+  margin-top: auto;
+}
