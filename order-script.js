@@ -114,7 +114,7 @@ const carsArray = [
     id: 3,
     name: "Nissan Qashqai",
     price: 15000,
-    img: "img/qashqai.png",
+    img: "img/quashqai.webp",
   },
 
   {
@@ -128,7 +128,7 @@ const carsArray = [
     id: 5,
     name: "Skoda Octavia",
     price: 14000,
-    img: "img/octavia.png",
+    img: "img/octavia.webp",
   },
 
   {
@@ -346,6 +346,9 @@ window.onload = () => {
   const options = document.querySelector(".options");
   const result = document.querySelector(".result");
   const carCards = document.querySelector(".carCards");
+  const scoreInfo = score.querySelector(".scoreInfo");
+  const scoreAdress = score.querySelector(".scoreAdress");
+
   //переключение кнопок
   scoreBtn.addEventListener("click", () => {
     scoreBtn.disabled = true;
@@ -398,6 +401,19 @@ window.onload = () => {
       carImg.width = "256";
       carImg.src = car.img;
       carCard.appendChild(carImg);
+      carCard.addEventListener("click", () => {
+        let allCards = document.querySelectorAll(".carCard");
+        allCards.forEach((card) => {
+          card.classList.remove("chosen");
+        });
+        carCard.classList.add("chosen");
+        scorePrice.textContent = car.price + " ₽.";
+        scoreBtn.disabled = false;
+        scoreBtn.textContent = "Дополнительно";
+        let newLine = scoreAdress.cloneNode(true);
+        newLine.line.querySelector(".adressOfPoint").textContent = car.name;
+        scoreInfo.appendChild(newLine);
+      });
       carCards.appendChild(carCard);
     });
   }
