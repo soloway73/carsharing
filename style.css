@@ -3,7 +3,9 @@
   fill: #0ec261;
   cursor: pointer;
 }
-
+.main-title a {
+  text-decoration: none;
+}
 button {
   cursor: pointer;
 }
@@ -189,6 +191,7 @@ button {
     margin: 0;
     padding: 0;
     text-align: right;
+    text-decoration: none;
   }
   .geo {
     display: flex;
@@ -346,6 +349,7 @@ button {
     top: 0;
     margin-bottom: auto;
     margin-top: auto;
+    text-decoration: none;
   }
   .geo {
     display: none;
@@ -369,6 +373,7 @@ button {
     margin-left: 118px;
     margin-right: 32.5px;
     margin-top: 5px;
+    text-decoration: none;
   }
   .geo2 img {
     width: 15px;
@@ -907,12 +912,15 @@ a.order-nav-active {
   color: #121212;
   margin-top: 32px;
 }
-.scoreAdress {
+.scoreAdress,
+.scoreModel {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   gap: 11px;
 }
-.scoreAdress p {
+.scoreAdress p,
+.scoreModel p {
   font-family: "Roboto";
   font-style: normal;
   font-size: 14px;
@@ -921,7 +929,8 @@ a.order-nav-active {
   color: #999999;
   margin-top: auto;
 }
-.scoreAdress p:first-child {
+.scoreAdress p:first-child,
+.scoreModel p:first-child {
   /* Пункт выдачи */
 
   font-family: "Roboto";
