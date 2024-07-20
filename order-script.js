@@ -411,7 +411,8 @@ window.onload = () => {
         scoreBtn.disabled = false;
         scoreBtn.textContent = "Дополнительно";
         let newLine = scoreAdress.cloneNode(true);
-        newLine.line.querySelector(".adressOfPoint").textContent = car.name;
+        newLine.querySelector(".scoreTitle").textContent = "Модель:";
+        newLine.querySelector(".adressOfPoint").textContent = car.name;
         scoreInfo.appendChild(newLine);
       });
       carCards.appendChild(carCard);
