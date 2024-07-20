@@ -995,15 +995,30 @@ a.order-nav-active {
 }
 .carCards {
   margin-top: 48px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .carCard {
   display: flex;
   flex-direction: column;
+  flex: 0 1 45%;
 
   width: 369px;
   height: 224px;
   border: solid 1px #cfcfcf;
-  padding-left: 16px;
+  padding: 2px 2px 2px 16px;
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 128, 51, 0.5); /* или другой эффект */
+  }
+  &:active {
+    border: solid 2px #0ec261;
+    padding: 1px 1px 1px 15px;
+  }
+}
+.carCard.chosen {
+  border: solid 2px #0ec261;
+  padding: 1px 1px 1px 15px;
 }
 .carCard h2 {
   font-family: "Roboto";
