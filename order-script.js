@@ -1,102 +1,3 @@
-// window.onload = () => {
-//   const dropdownMenu = document.getElementById("dropdown-menu");
-//   const inputDropdown = document.getElementById("input-dropdown");
-//   const menuItems = dropdownMenu.querySelectorAll("li");
-//   const cityCrossBtn = document.getElementById("cityCleanBtn");
-//   const pointCrossBtn = document.getElementById("pointCleanBtn");
-
-//   //появление меню
-//   function filtration() {
-//     menuItems.forEach((menuItem) => {
-//       if (
-//         menuItem.textContent
-//           .toLowerCase()
-//           .includes(inputDropdown.value.toLowerCase())
-//       ) {
-//         menuItem.style.display = "block";
-//       } else {
-//         menuItem.style.display = "none";
-//       }
-//     });
-//   }
-//   function crossBtnStatusChecker() {
-//     if (inputDropdown.value === "") {
-//       cityCrossBtn.style.display = "none";
-//     } else {
-//       cityCrossBtn.style.display = "block";
-//     }
-//   }
-
-//   inputDropdown.addEventListener("focus", () => {
-//     crossBtnStatusChecker();
-//     dropdownMenu.style.display = "block";
-//     filtration();
-//   });
-
-//   //фильтр по вводу, который скрывает элменты, которые не содержат введенное значение
-//   inputDropdown.addEventListener("input", (event) => {
-//     // inputValue = event.target.value.toLowerCase();
-//     crossBtnStatusChecker();
-//     filtration();
-//   });
-
-//   // закрываем выпадающий список кликом на любой элемент вне выпадающего списка
-//   document.addEventListener("click", (event) => {
-//     if (
-//       !dropdownMenu.contains(event.target) &&
-//       !Array.from(dropdownMenu.children).some((li) =>
-//         li.contains(event.target)
-//       ) &&
-//       !inputDropdown.contains(event.target)
-//     ) {
-//       dropdownMenu.style.display = "none";
-//     }
-//   });
-//   // переносим значение выбранного элемента списка в поле ввода
-//   dropdownMenu.addEventListener("click", (event) => {
-//     if (event.target.tagName === "LI") {
-//       inputDropdown.value = event.target.textContent;
-//       dropdownMenu.style.display = "none";
-//       crossBtnStatusChecker();
-//     }
-//   });
-
-//   // очистка поля ввода крестиком
-
-//   cityCrossBtn.addEventListener("click", () => {
-//     document.getElementById("input-dropdown").value = "";
-//     cityCrossBtn.style.display = "none";
-//   });
-//   pointCrossBtn.addEventListener("click", () => {
-//     document.getElementById("inputPoint").value = "";
-//   });
-
-//   // бургерное меню
-//   const iconMenu = document.querySelectorAll(".menu-icon");
-//   const menuBody = document.querySelector(".links");
-//   const desktop = document.querySelector(".desktop");
-//   for (let i = 0; i < iconMenu.length; i++) {
-//     if (iconMenu[i]) {
-//       iconMenu[i].addEventListener("click", function (e) {
-//         document.body.classList.toggle("lock");
-//         menuBody.classList.toggle("_active");
-//         iconMenu[i].classList.toggle("_active");
-//         desktop.classList.toggle("blacked");
-//       });
-//     }
-//   }
-
-//   let links = menuBody.querySelectorAll("a");
-
-//   for (let i = 0; i < links.length; i++) {
-//     links[i].addEventListener("click", function () {
-//       menuBody.classList.remove("_active");
-//       iconMenu.classList.remove("_active");
-//       document.body.classList.remove("lock");
-//     });
-//   }
-// };
-
 const carsArray = [
   {
     id: 1,
@@ -331,6 +232,10 @@ function generateRandomPhoneNumber() {
   return phone;
 }
 window.onload = () => {
+  const orderNavLocation = document.getElementById("orderNavLocation");
+  const orderNavModel = document.getElementById("orderNavModel");
+  const orderNavOptions = document.getElementById("orderNavOptions");
+  const orderNavResult = document.getElementById("orderNavResult");
   const dropdownMenu = document.getElementById("dropdown-menu");
   const inputDropdown = document.getElementById("input-dropdown");
   const cityCrossBtn = document.getElementById("cityCleanBtn");
@@ -348,6 +253,7 @@ window.onload = () => {
   const carCards = document.querySelector(".carCards");
   const scoreInfo = score.querySelector(".scoreInfo");
   const scoreAdress = score.querySelector(".scoreAdress");
+  const scoreModel = score.querySelector(".scoreModel");
 
   //переключение кнопок
   scoreBtn.addEventListener("click", () => {
@@ -360,7 +266,8 @@ window.onload = () => {
           point.adress === inputPoint.value
       );
 
-      console.log(pointIndex);
+      orderNavLocation.classList.remove("order-nav-active");
+      orderNavModel.classList.add("order-nav-active");
       location.classList.add("hidden");
       model.classList.remove("hidden");
       carCards.innerHTML = "";
@@ -413,7 +320,7 @@ window.onload = () => {
         let newLine = scoreAdress.cloneNode(true);
         newLine.querySelector(".scoreTitle").textContent = "Модель:";
         newLine.querySelector(".adressOfPoint").textContent = car.name;
-        scoreInfo.appendChild(newLine);
+        scoreModel.innerHTML = newLine.innerHTML;
       });
       carCards.appendChild(carCard);
     });
