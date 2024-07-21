@@ -4,18 +4,24 @@ const carsArray = [
     name: "Vesta",
     price: 7000,
     img: "img/vesta.png",
+    class: "economic",
+    colors: ["Красный", "Зеленый", "Синий"],
   },
   {
     id: 2,
     name: "Hyundai i30",
     price: 12000,
     img: "img/i30n.png",
+    class: "premium",
+    colors: ["Красный", "Белый", "Синий"],
   },
   {
     id: 3,
     name: "Nissan Qashqai",
     price: 15000,
     img: "img/quashqai.webp",
+    class: "premium",
+    colors: ["Красный", "Серый"],
   },
 
   {
@@ -23,6 +29,8 @@ const carsArray = [
     name: "Creta",
     price: 20000,
     img: "img/creta.png",
+    class: "premium",
+    colors: ["Серый", "Зеленый"],
   },
 
   {
@@ -30,6 +38,8 @@ const carsArray = [
     name: "Skoda Octavia",
     price: 14000,
     img: "img/octavia.webp",
+    class: "premium",
+    colors: ["Белый", "Синий"],
   },
 
   {
@@ -37,6 +47,8 @@ const carsArray = [
     name: "Elantra",
     price: 6000,
     img: "img/elantra.png",
+    class: "economic",
+    colors: ["Красный", "Серый", "Белый"],
   },
 
   {
@@ -44,6 +56,8 @@ const carsArray = [
     name: "Solaris",
     price: 9000,
     img: "img/solaris.png",
+    class: "economic",
+    colors: ["Красный", "Зеленый", "Синий"],
   },
 ];
 const citiesArray = [
@@ -278,6 +292,8 @@ window.onload = () => {
     if (scoreBtn.textContent === "Дополнительно") {
       model.classList.add("hidden");
       options.classList.remove("hidden");
+      orderNavModel.classList.remove("order-nav-active");
+      orderNavOptions.classList.add("order-nav-active");
       scoreBtn.textContent = "Итого";
       return;
     }
@@ -292,12 +308,14 @@ window.onload = () => {
     carCards.innerHTML = "";
     pointsArray[pointId].carsId.forEach((carId) => {
       let car = carsArray[carId - 1];
+
       let carCard = document.createElement("div");
       carCard.classList.add("carCard");
       let carName = document.createElement("h2");
       carName.classList.add("carModel");
       carName.textContent = car.name;
       carCard.appendChild(carName);
+
       let carPrice = document.createElement("p");
       carPrice.classList.add("carPrice");
       carPrice.textContent = car.price + " ₽.";
