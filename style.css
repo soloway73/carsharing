@@ -1057,3 +1057,13 @@ a.order-nav-active {
   margin-left: auto;
   margin-top: auto;
 }
+.modelsFilter {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #999999;
+}
+input[type="radio"]:checked + label {
+  color: #121212;
+}

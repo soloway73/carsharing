@@ -134,12 +134,12 @@
                  <div id="map" style="width: 736px; height: 352px;"></div>
                   </div>
                   <div class="model hidden">
-                    <input type="radio" name="sortModels" id="allModel">
-                    <label for="allModel">Все модели</label>
+                    <input type="radio" name="sortModels" id="allModel" checked>
+                    <label for="allModel" class="modelsFilter">Все модели</label>
                     <input type="radio" name="sortModels" id="economic">
-                    <label for="economic">Эконом</label>
+                    <label for="economic" class="modelsFilter">Эконом</label>
                     <input type="radio" name="sortModels" id="premium">
-                    <label for="premium">Премиум</label>
+                    <label for="premium" class="modelsFilter">Премиум</label>
                    
                     <div class="carCards">
                       <div class="carCard">
@@ -159,8 +159,9 @@
                       <p class="scoreTitle">Пункт выдачи</p>
                       <p>......................</p>
                       <p class="adressOfPoint">не выбран</p>
-                    </div>
+                      </div>
                     <div class="scoreModel"></div>
+                    <div class="scoreOptions"></div>
                   </div>
                   <p><b>Цена: </b><span class="scorePrice">...</span></p>
                   <button type="button" class="scoreBtn" id="scoreBtn" disabled>Выбрать модель</button>
