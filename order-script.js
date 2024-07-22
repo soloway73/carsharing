@@ -4,18 +4,24 @@ const carsArray = [
     name: "Vesta",
     price: 7000,
     img: "img/vesta.png",
+    class: "economic",
+    colors: ["Красный", "Зеленый", "Синий"],
   },
   {
     id: 2,
     name: "Hyundai i30",
     price: 12000,
     img: "img/i30n.png",
+    class: "premium",
+    colors: ["Красный", "Белый", "Синий"],
   },
   {
     id: 3,
     name: "Nissan Qashqai",
     price: 15000,
     img: "img/quashqai.webp",
+    class: "premium",
+    colors: ["Красный", "Серый"],
   },
 
   {
@@ -23,6 +29,8 @@ const carsArray = [
     name: "Creta",
     price: 20000,
     img: "img/creta.png",
+    class: "premium",
+    colors: ["Серый", "Зеленый"],
   },
 
   {
@@ -30,6 +38,8 @@ const carsArray = [
     name: "Skoda Octavia",
     price: 14000,
     img: "img/octavia.webp",
+    class: "premium",
+    colors: ["Белый", "Синий"],
   },
 
   {
@@ -37,6 +47,8 @@ const carsArray = [
     name: "Elantra",
     price: 6000,
     img: "img/elantra.png",
+    class: "economic",
+    colors: ["Красный", "Серый", "Белый"],
   },
 
   {
@@ -44,6 +56,8 @@ const carsArray = [
     name: "Solaris",
     price: 9000,
     img: "img/solaris.png",
+    class: "economic",
+    colors: ["Красный", "Зеленый", "Синий"],
   },
 ];
 const citiesArray = [
@@ -254,7 +268,48 @@ window.onload = () => {
   const scoreInfo = score.querySelector(".scoreInfo");
   const scoreAdress = score.querySelector(".scoreAdress");
   const scoreModel = score.querySelector(".scoreModel");
+  const scoreOptions = score.querySelector(".scoreOptions");
+  const allModelBtn = document.getElementById("allModel");
+  const economicBtn = document.getElementById("economic");
+  const premiumBtn = document.getElementById("premium");
 
+  //радио кнопки на странице "МОДЕЛЬ"
+  allModelBtn.addEventListener("change", () => {
+    if (allModelBtn.checked) {
+      let pointIndex = pointsArray.findIndex(
+        (point) =>
+          point.city === inputDropdown.value &&
+          point.adress === inputPoint.value
+      );
+      renderModels(pointIndex);
+    }
+    scoreModel.innerHTML = "";
+    scoreOptions.innerHTML = "";
+  });
+  economicBtn.addEventListener("change", () => {
+    if (economicBtn.checked) {
+      let pointIndex = pointsArray.findIndex(
+        (point) =>
+          point.city === inputDropdown.value &&
+          point.adress === inputPoint.value
+      );
+      renderModels(pointIndex);
+      scoreModel.innerHTML = "";
+      scoreOptions.innerHTML = "";
+    }
+  });
+  premiumBtn.addEventListener("change", () => {
+    if (premiumBtn.checked) {
+      let pointIndex = pointsArray.findIndex(
+        (point) =>
+          point.city === inputDropdown.value &&
+          point.adress === inputPoint.value
+      );
+      renderModels(pointIndex);
+      scoreModel.innerHTML = "";
+      scoreOptions.innerHTML = "";
+    }
+  });
   //переключение кнопок
   scoreBtn.addEventListener("click", () => {
     scoreBtn.disabled = true;
@@ -268,6 +323,20 @@ window.onload = () => {
 
       orderNavLocation.classList.remove("order-nav-active");
       orderNavModel.classList.add("order-nav-active");
+      // слушатель событий на хлебные крошки "МОДЕЛЬ"
+      orderNavModel.addEventListener("click", () => {
+        orderNavModel.classList.add("order-nav-active");
+        orderNavLocation.classList.remove("order-nav-active");
+        orderNavOptions.classList.remove("order-nav-active");
+        orderNavResult.classList.remove("order-nav-active");
+        location.classList.add("hidden");
+        model.classList.remove("hidden");
+        options.classList.add("hidden");
+        result.classList.add("hidden");
+        scoreBtn.textContent = "Дополнительно";
+        scoreBtn.disabled = false;
+        scoreOptions.innerHTML = "";
+      });
       location.classList.add("hidden");
       model.classList.remove("hidden");
       carCards.innerHTML = "";
@@ -278,6 +347,8 @@ window.onload = () => {
     if (scoreBtn.textContent === "Дополнительно") {
       model.classList.add("hidden");
       options.classList.remove("hidden");
+      orderNavModel.classList.remove("order-nav-active");
+      orderNavOptions.classList.add("order-nav-active");
       scoreBtn.textContent = "Итого";
       return;
     }
@@ -290,40 +361,120 @@ window.onload = () => {
   });
   function renderModels(pointId) {
     carCards.innerHTML = "";
-    pointsArray[pointId].carsId.forEach((carId) => {
-      let car = carsArray[carId - 1];
-      let carCard = document.createElement("div");
-      carCard.classList.add("carCard");
-      let carName = document.createElement("h2");
-      carName.classList.add("carModel");
-      carName.textContent = car.name;
-      carCard.appendChild(carName);
-      let carPrice = document.createElement("p");
-      carPrice.classList.add("carPrice");
-      carPrice.textContent = car.price + " ₽.";
-      carCard.appendChild(carPrice);
-      let carImg = document.createElement("img");
-      carImg.classList.add("carImg");
-      carImg.alt = car.name;
-      carImg.width = "256";
-      carImg.src = car.img;
-      carCard.appendChild(carImg);
-      carCard.addEventListener("click", () => {
-        let allCards = document.querySelectorAll(".carCard");
-        allCards.forEach((card) => {
-          card.classList.remove("chosen");
+    if (allModelBtn.checked) {
+      pointsArray[pointId].carsId.forEach((carId) => {
+        let car = carsArray[carId - 1];
+
+        let carCard = document.createElement("div");
+        carCard.classList.add("carCard");
+        let carName = document.createElement("h2");
+        carName.classList.add("carModel");
+        carName.textContent = car.name;
+        carCard.appendChild(carName);
+
+        let carPrice = document.createElement("p");
+        carPrice.classList.add("carPrice");
+        carPrice.textContent = car.price + " ₽.";
+        carCard.appendChild(carPrice);
+        let carImg = document.createElement("img");
+        carImg.classList.add("carImg");
+        carImg.alt = car.name;
+        carImg.width = "256";
+        carImg.src = car.img;
+        carCard.appendChild(carImg);
+        carCard.addEventListener("click", () => {
+          let allCards = document.querySelectorAll(".carCard");
+          allCards.forEach((card) => {
+            card.classList.remove("chosen");
+          });
+          carCard.classList.add("chosen");
+          scorePrice.textContent = car.price + " ₽.";
+          scoreBtn.disabled = false;
+          scoreBtn.textContent = "Дополнительно";
+          let newLine = scoreAdress.cloneNode(true);
+          newLine.querySelector(".scoreTitle").textContent = "Модель:";
+          newLine.querySelector(".adressOfPoint").textContent = car.name;
+          scoreModel.innerHTML = newLine.innerHTML;
         });
-        carCard.classList.add("chosen");
-        scorePrice.textContent = car.price + " ₽.";
-        scoreBtn.disabled = false;
-        scoreBtn.textContent = "Дополнительно";
-        let newLine = scoreAdress.cloneNode(true);
-        newLine.querySelector(".scoreTitle").textContent = "Модель:";
-        newLine.querySelector(".adressOfPoint").textContent = car.name;
-        scoreModel.innerHTML = newLine.innerHTML;
+        carCards.appendChild(carCard);
       });
-      carCards.appendChild(carCard);
-    });
+    } else if (economicBtn.checked) {
+      pointsArray[pointId].carsId.forEach((carId) => {
+        let car = carsArray[carId - 1];
+        if (car.class === "economic") {
+          let carCard = document.createElement("div");
+          carCard.classList.add("carCard");
+          let carName = document.createElement("h2");
+          carName.classList.add("carModel");
+          carName.textContent = car.name;
+          carCard.appendChild(carName);
+
+          let carPrice = document.createElement("p");
+          carPrice.classList.add("carPrice");
+          carPrice.textContent = car.price + " ₽.";
+          carCard.appendChild(carPrice);
+          let carImg = document.createElement("img");
+          carImg.classList.add("carImg");
+          carImg.alt = car.name;
+          carImg.width = "256";
+          carImg.src = car.img;
+          carCard.appendChild(carImg);
+          carCard.addEventListener("click", () => {
+            let allCards = document.querySelectorAll(".carCard");
+            allCards.forEach((card) => {
+              card.classList.remove("chosen");
+            });
+            carCard.classList.add("chosen");
+            scorePrice.textContent = car.price + " ₽.";
+            scoreBtn.disabled = false;
+            scoreBtn.textContent = "Дополнительно";
+            let newLine = scoreAdress.cloneNode(true);
+            newLine.querySelector(".scoreTitle").textContent = "Модель:";
+            newLine.querySelector(".adressOfPoint").textContent = car.name;
+            scoreModel.innerHTML = newLine.innerHTML;
+          });
+          carCards.appendChild(carCard);
+        }
+      });
+    } else if (premiumBtn.checked) {
+      pointsArray[pointId].carsId.forEach((carId) => {
+        let car = carsArray[carId - 1];
+        if (car.class === "premium") {
+          let carCard = document.createElement("div");
+          carCard.classList.add("carCard");
+          let carName = document.createElement("h2");
+          carName.classList.add("carModel");
+          carName.textContent = car.name;
+          carCard.appendChild(carName);
+
+          let carPrice = document.createElement("p");
+          carPrice.classList.add("carPrice");
+          carPrice.textContent = car.price + " ₽.";
+          carCard.appendChild(carPrice);
+          let carImg = document.createElement("img");
+          carImg.classList.add("carImg");
+          carImg.alt = car.name;
+          carImg.width = "256";
+          carImg.src = car.img;
+          carCard.appendChild(carImg);
+          carCard.addEventListener("click", () => {
+            let allCards = document.querySelectorAll(".carCard");
+            allCards.forEach((card) => {
+              card.classList.remove("chosen");
+            });
+            carCard.classList.add("chosen");
+            scorePrice.textContent = car.price + " ₽.";
+            scoreBtn.disabled = false;
+            scoreBtn.textContent = "Дополнительно";
+            let newLine = scoreAdress.cloneNode(true);
+            newLine.querySelector(".scoreTitle").textContent = "Модель:";
+            newLine.querySelector(".adressOfPoint").textContent = car.name;
+            scoreModel.innerHTML = newLine.innerHTML;
+          });
+          carCards.appendChild(carCard);
+        }
+      });
+    }
   }
   //появление меню
   function createCities() {

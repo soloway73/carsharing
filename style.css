@@ -991,7 +991,6 @@ a.order-nav-active {
   display: none;
 }
 .model input {
-  margin-top: 48px;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 300;
@@ -1000,6 +999,7 @@ a.order-nav-active {
   /* identical to box height, or 114% */
 
   /* Black */
+  margin-top: 48px;
   color: #121212;
 }
 .carCards {
@@ -1007,6 +1007,8 @@ a.order-nav-active {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  overflow: auto;
+  max-height: 600px;
 }
 .carCard {
   display: flex;
@@ -1054,4 +1056,14 @@ a.order-nav-active {
   padding: 0;
   margin-left: auto;
   margin-top: auto;
+}
+.modelsFilter {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #999999;
+}
+input[type="radio"]:checked + label {
+  color: #121212;
 }
