@@ -991,7 +991,6 @@ a.order-nav-active {
   display: none;
 }
 .model input {
-  margin-top: 48px;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 300;
@@ -1000,6 +999,7 @@ a.order-nav-active {
   /* identical to box height, or 114% */
 
   /* Black */
+  margin-top: 48px;
   color: #121212;
 }
 .carCards {
