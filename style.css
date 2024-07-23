@@ -1067,3 +1067,45 @@ a.order-nav-active {
 input[type="radio"]:checked + label {
   color: #121212;
 }
+.optionsColor input[type="radio"]:checked + label {
+  color: #121212;
+}
+.optionsColor label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #999999;
+  margin-right: 16px;
+}
+.optionsColor p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #121212;
+  margin-top: 32px;
+}
+input[type="datetime-local"] {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: solid 1px #cfcfcf;
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #999999;
+  margin-top: 16px;
+}
+.timeChoice {
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
+.timeChoice p {
+  margin-bottom: 0;
+}
+.timeChoice div {
+  align-self: flex-end;
+}

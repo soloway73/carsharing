@@ -248,7 +248,7 @@ function generateRandomPhoneNumber() {
 function renderColors() {
   const optionsColor = document.querySelector(".optionsColor");
   optionsColor.innerHTML =
-    '<p>Цвет</p> <input type="radio" name="color" id="allColors"> <label for="color">Любой</label>';
+    '<p>Цвет</p> <input type="radio" name="color" id="allColors" checked> <label for="color">Любой</label>';
   currentCar.colors.forEach((color) => {
     let newColor = document.createElement("input");
     newColor.type = "radio";
