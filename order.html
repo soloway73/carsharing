@@ -11,6 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="style.css" rel="stylesheet" />
     <title>Need for drive</title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=07aa1514-a832-4cb0-9ab8-4cf8895c8e22&lang=ru_RU" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+</script>
   </head>
   <body>
     
@@ -59,7 +63,7 @@
           </nav>
       </header>
       <main>
-
+<!-- 
 <div class="mobile">
             <div class="container">
               <div class="menu-icon">
@@ -76,8 +80,8 @@
             <div class="sidebar"></div>
 
           
-</div>
-<div class="desktop">
+</div> -->
+<div>
             
               <div class="sidebar">
                 <div class="menu-icon"><span></span></div>
@@ -85,34 +89,91 @@
               </div>
               <div class="order-container">
               <div class="main-title">
-                <h1>Need for drive</h1>
+                <a href="../index.html"><h1>Need for drive</h1></a>
                 <div class="order-geo2">
                   <img src="img/geotag.svg" alt="geotag" />
                   <a class="city">Ульяновск</a>
                 </div>
               </div>
                 <div class="breadcrumbs">
-                  <a href="#" class="order-nav-active">Местоположение</a>
+                  <a href="../order.html" id="orderNavLocation" class="order-nav-active">Местоположение</a>
                   <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 0L6 4.03L0 8V0Z" fill="#999999"/>
 </svg>
 
-                  <a href="#">Модель</a>
+                  <a href="#" id="orderNavModel">Модель</a>
                   <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 0L6 4.03L0 8V0Z" fill="#999999"/>
 </svg>
 
-                  <a href="#">Дополнительно</a>
+                  <a href="#" id="orderNavOptions">Дополнительно</a>
                   <svg width="6" height="8" viewBox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 0L6 4.03L0 8V0Z" fill="#999999"/>
 </svg>
 
-                  <a href="#">Итого</a>
+                  <a href="#" id="orderNavResult">Итого</a>
                 </div>
-            
-              <footer>
+               <div class="choiceAndScoreContainer">
+                <div class="choice">                
+                  <div class="location"> 
+                    <div class="location-city">
+                   <label  for="input-dropdown">Город</label>
+                   <input type="text" id="input-dropdown" autocomplete="off" placeholder="Начните вводить город...">
+                     <ul id="dropdown-menu">
+                     </ul>
+                     <span id="cityCleanBtn"></span>
 
-              </footer>
+                 </div>
+                 <div class="location-point">
+                    <label for="inputPoint">Пункт выдачи</label>
+                    <input type="text" placeholder="Начните вводить пункт..." autocomplete="off" id="inputPoint" disabled>
+                    <ul id="pointsDropDownMenu"></ul>
+                    <span id="pointCleanBtn"></span>
+                 </div>
+                 <p>Выбрать на карте:</p>
+                 <div id="map" style="width: 736px; height: 352px;"></div>
+                  </div>
+                  <div class="model hidden">
+                    <input type="radio" name="sortModels" id="allModel" checked>
+                    <label for="allModel" class="modelsFilter">Все модели</label>
+                    <input type="radio" name="sortModels" id="economic">
+                    <label for="economic" class="modelsFilter">Эконом</label>
+                    <input type="radio" name="sortModels" id="premium">
+                    <label for="premium" class="modelsFilter">Премиум</label>
+                   
+                    <div class="carCards">
+                      <div class="carCard">
+                        <h2 class="carModel">i30 N</h2>
+                        <p class="carPrice">10 000 - 32 000 ₽</p>
+                        <img src="img/i30n.png" alt="hyundai i30n" width="256" height="auto">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="options hidden">
+                    <div class="optionsColor">
+                      <p>Цвет</p>
+                      <input type="radio" name="color" id="allColors">
+                      <label for="color">Любой</label>
+                    </div>
+                  </div>
+                  <div class="result hidden">страница ИТОГО</div>
+                </div>
+                <div class="score">
+                  <h2>Ваш заказ:</h2>
+                  <div class="scoreInfo">
+                    <div class="scoreAdress">
+                      <p class="scoreTitle">Пункт выдачи</p>
+                      <p>......................</p>
+                      <p class="adressOfPoint">не выбран</p>
+                      </div>
+                    <div class="scoreModel"></div>
+                    <div class="scoreOptions"></div>
+                  </div>
+                  <p><b>Цена: </b><span class="scorePrice">...</span></p>
+                  <button type="button" class="scoreBtn" id="scoreBtn" disabled>Выбрать модель</button>
+                </div>
+               </div>
+             
             </div> 
             
               
@@ -125,6 +186,7 @@
 
       </footer>
     </div>
-    <script src="script.js" type="text/javascript"></script>
+    <script src="order-script.js" type="text/javascript"></script>
+    
   </body>
 </html>

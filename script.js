@@ -71,3 +71,8 @@ slideControlRight.onclick = function () {
     switchSlide();
   }
 };
+// кнопка забронировать
+let orderBtn = document.querySelector(".orderBtn");
+orderBtn.addEventListener("click", function () {
+  window.location.href = "/order.html";
+});
