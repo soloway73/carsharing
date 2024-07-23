@@ -245,6 +245,31 @@ function generateRandomPhoneNumber() {
   phone += "-" + code;
   return phone;
 }
+function renderColors() {
+  const optionsColor = document.querySelector(".optionsColor");
+  optionsColor.innerHTML =
+    '<p>Цвет</p> <input type="radio" name="color" id="allColors"> <label for="color">Любой</label>';
+  currentCar.colors.forEach((color) => {
+    let newColor = document.createElement("input");
+    newColor.type = "radio";
+    newColor.name = "color";
+    newColor.value = color;
+    newColor.setAttribute(
+      "id",
+      color + currentCar.colors.findIndex((c) => c === color)
+    );
+    optionsColor.appendChild(newColor);
+
+    let newColorLabel = document.createElement("label");
+    newColorLabel.textContent = color;
+    newColorLabel.setAttribute(
+      "for",
+      color + currentCar.colors.findIndex((c) => c === color)
+    );
+    optionsColor.appendChild(newColorLabel);
+  });
+}
+let currentCar = carsArray[0];
 window.onload = () => {
   const orderNavLocation = document.getElementById("orderNavLocation");
   const orderNavModel = document.getElementById("orderNavModel");
@@ -275,6 +300,7 @@ window.onload = () => {
 
   //радио кнопки на странице "МОДЕЛЬ"
   allModelBtn.addEventListener("change", () => {
+    scoreBtn.disabled = true;
     if (allModelBtn.checked) {
       let pointIndex = pointsArray.findIndex(
         (point) =>
@@ -287,6 +313,7 @@ window.onload = () => {
     scoreOptions.innerHTML = "";
   });
   economicBtn.addEventListener("change", () => {
+    scoreBtn.disabled = true;
     if (economicBtn.checked) {
       let pointIndex = pointsArray.findIndex(
         (point) =>
@@ -299,6 +326,7 @@ window.onload = () => {
     }
   });
   premiumBtn.addEventListener("change", () => {
+    scoreBtn.disabled = true;
     if (premiumBtn.checked) {
       let pointIndex = pointsArray.findIndex(
         (point) =>
@@ -349,6 +377,7 @@ window.onload = () => {
       options.classList.remove("hidden");
       orderNavModel.classList.remove("order-nav-active");
       orderNavOptions.classList.add("order-nav-active");
+      renderColors();
       scoreBtn.textContent = "Итого";
       return;
     }
@@ -383,6 +412,7 @@ window.onload = () => {
         carImg.src = car.img;
         carCard.appendChild(carImg);
         carCard.addEventListener("click", () => {
+          currentCar = car;
           let allCards = document.querySelectorAll(".carCard");
           allCards.forEach((card) => {
             card.classList.remove("chosen");
@@ -420,6 +450,7 @@ window.onload = () => {
           carImg.src = car.img;
           carCard.appendChild(carImg);
           carCard.addEventListener("click", () => {
+            currentCar = car;
             let allCards = document.querySelectorAll(".carCard");
             allCards.forEach((card) => {
               card.classList.remove("chosen");
@@ -458,6 +489,7 @@ window.onload = () => {
           carImg.src = car.img;
           carCard.appendChild(carImg);
           carCard.addEventListener("click", () => {
+            currentCar = car;
             let allCards = document.querySelectorAll(".carCard");
             allCards.forEach((card) => {
               card.classList.remove("chosen");
@@ -743,5 +775,4 @@ window.onload = () => {
       });
     });
   }
-  // переключение хлебных крошек
 };
