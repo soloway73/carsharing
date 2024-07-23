@@ -152,8 +152,19 @@
                   <div class="options hidden">
                     <div class="optionsColor">
                       <p>Цвет</p>
-                      <input type="radio" name="color" id="allColors">
+                      <input type="radio" name="color" id="allColors" checked>
                       <label for="color">Любой</label>
+                    </div>
+                    <div class="timeChoice">
+                      <p>Дата аренды</p>
+                      <div>
+                       <label for="start-date">С</label>
+                       <input type="datetime-local" id="start-date" name="start-date" placeholder="С">
+                       </div>
+                     <div>
+                       <label for="end-date">По</label>
+                        <input type="datetime-local" id="end-date" name="end-date" placeholder="По">
+                     </div>
                     </div>
                   </div>
                   <div class="result hidden">страница ИТОГО</div>
