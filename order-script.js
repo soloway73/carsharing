@@ -1,3 +1,16 @@
+let finalOrder = {
+  city: "",
+  pointAdress: "",
+  model: "",
+  options: {
+    color: "",
+    time: "",
+    tariff: "",
+    fullFuel: false,
+    babySeat: false,
+  },
+  price: 0,
+};
 const carsArray = [
   {
     id: 1,
@@ -245,6 +258,7 @@ function generateRandomPhoneNumber() {
   phone += "-" + code;
   return phone;
 }
+
 function renderColors() {
   const optionsColor = document.querySelector(".optionsColor");
   optionsColor.innerHTML =

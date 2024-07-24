@@ -157,15 +157,33 @@
                     </div>
                     <div class="timeChoice">
                       <p>Дата аренды</p>
-                      <div>
+                      <div class="date">
                        <label for="start-date">С</label>
                        <input type="datetime-local" id="start-date" name="start-date" placeholder="С">
                        </div>
-                     <div>
+                     <div class="date">
                        <label for="end-date">По</label>
                         <input type="datetime-local" id="end-date" name="end-date" placeholder="По">
                      </div>
                     </div>
+                     <p>Тариф</p>
+                     <div class="tariff">
+                       <input type="radio" name="tariff" id="minutely">
+                       <label for="minutely">Поминутно, 7₽/мин</label>
+                     </div>
+                     <div class="tariff">
+                       <input type="radio" name="tariff" id="daily" checked>
+                       <label for="daily">На сутки, 1999 ₽/сутки</label>
+                     </div>
+                     <p>Дополнительно</p>
+                     <div class="advanced">
+                       <input type="checkbox" name="advanced" id="fuel">
+                       <label for="fuel">Полный бак</label>
+                       <input type="checkbox" name="advanced" id="childSeat">
+                       <label for="childSeat">Детское кресло</label>
+                       <input type="checkbox" name="advanced" id="wheel">
+                       <label for="wheel">Правый руль</label>
+                     </div>
                   </div>
                   <div class="result hidden">страница ИТОГО</div>
                 </div>
