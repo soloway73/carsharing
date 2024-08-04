@@ -340,8 +340,8 @@ window.onload = () => {
       if (endDateValue < startDateValue) {
         endDateInput.value = "";
         alert("Дата окончания не может быть раньше даты начала");
-        console.log(calculateTimeDifference());
       }
+      renderPeriodToScore();
     });
   });
   // рассчёт временного промежутка между двумя датами
@@ -350,34 +350,48 @@ window.onload = () => {
     const endDateValue = new Date(endDateInput.value);
 
     let timeDifference =
-      (endDateValue.getTime() - startDateValue.getTime()) / 1000; // convert to seconds
-
+      (endDateValue.getTime() - startDateValue.getTime()) / 1000; // конвертируем в секунды
+    console.log(endDateValue.getTime() - startDateValue.getTime() / 1000);
     if (timeDifference < 3600) {
-      // less than an hour
-      timeDifference /= 60; // convert to minutes
-      timeDifference = Math.ceil(timeDifference); // round up to the nearest minute
+      // если меньше 1 часа
+      timeDifference /= 60; // конвертируем в минуты
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " минут"; // возвращаем время в минутах
     } else if (timeDifference >= 3600 && timeDifference < 86400) {
-      // more than an hour, but less than a day
-      timeDifference /= 3600; // convert to hours
-      timeDifference = Math.ceil(timeDifference); // round up to the nearest hour
+      // если больше часа, но меньше 1 дня
+      timeDifference /= 3600; // конвертируем в часы
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " часов"; // возвращаем время в часах
     } else {
-      // more than a day
-      timeDifference /= 86400; // convert to days
-      timeDifference = Math.ceil(timeDifference); // round up to the nearest day
+      // больше 1 дня
+      timeDifference /= 86400; // конвертируем в дни
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " дней"; // возвращаем время в днях
     }
-
-    return `${timeDifference} ${getUnit(timeDifference)}`;
   }
 
-  function getUnit(value) {
-    if (value < 1) return "минут";
-    else if (value >= 1 && value < 24) return "часов";
-    else return "дней";
-  }
+  // function getUnit(value) {
+  //   if (value < 1) return "минут";
+  //   else if (value >= 1 && value < 24) return "часов";
+  //   else return "дней";
+  // }
 
+  function renderPeriodToScore() {
+    if (document.querySelector(".scorePeriod")) {
+      document.querySelector(".scorePeriod").remove();
+    }
+    let newPeriod = document.createElement("div");
+    newPeriod.classList.add("scorePeriod");
+    newPeriod.innerHTML =
+      '<p class="scoreTitle">Срок аренды</p> <p>......................</p> <p class="scorePeriodValue">' +
+      calculateTimeDifference() +
+      "</p>";
+    scoreOptions.appendChild(newPeriod);
+    scoreBtn.disabled = false;
+  }
   function renderColorToScore() {
     scoreOptions.innerHTML =
-      '<p class="scoreTitle">Цвет</p> <p>......................</p> <p class="scoreColorValue">Любой</p>';
+      '<div><p class="scoreTitle">Цвет</p> <p>......................</p> <p class="scoreColorValue">Любой</p></div>';
   }
 
   //радио кнопки на странице "МОДЕЛЬ"
