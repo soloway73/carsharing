@@ -913,14 +913,16 @@ a.order-nav-active {
   margin-top: 32px;
 }
 .scoreAdress,
-.scoreModel {
+.scoreModel,
+.scoreOptions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   gap: 11px;
 }
 .scoreAdress p,
-.scoreModel p {
+.scoreModel p,
+.scoreOptions p {
   font-family: "Roboto";
   font-style: normal;
   font-size: 14px;
@@ -930,7 +932,8 @@ a.order-nav-active {
   margin-top: auto;
 }
 .scoreAdress p:first-child,
-.scoreModel p:first-child {
+.scoreModel p:first-child,
+.scoreOptions p:first-child {
   /* Пункт выдачи */
 
   font-family: "Roboto";

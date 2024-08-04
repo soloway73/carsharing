@@ -262,7 +262,13 @@ function generateRandomPhoneNumber() {
 function renderColors() {
   const optionsColor = document.querySelector(".optionsColor");
   optionsColor.innerHTML =
-    '<p>Цвет</p> <input type="radio" name="color" id="allColors" checked> <label for="color">Любой</label>';
+    '<p>Цвет</p> <input type="radio" name="color" id="allColors" checked> <label for="allColors">Любой</label>';
+  let allColors = document.getElementById("allColors");
+  allColors.addEventListener("change", () => {
+    if (allColors.checked) {
+      document.querySelector(".scoreColorValue").textContent = "Любой";
+    }
+  });
   currentCar.colors.forEach((color) => {
     let newColor = document.createElement("input");
     newColor.type = "radio";
@@ -280,6 +286,11 @@ function renderColors() {
       "for",
       color + currentCar.colors.findIndex((c) => c === color)
     );
+    newColor.addEventListener("change", () => {
+      if (newColor.checked) {
+        document.querySelector(".scoreColorValue").textContent = newColor.value;
+      }
+    });
     optionsColor.appendChild(newColorLabel);
   });
 }
@@ -311,6 +322,63 @@ window.onload = () => {
   const allModelBtn = document.getElementById("allModel");
   const economicBtn = document.getElementById("economic");
   const premiumBtn = document.getElementById("premium");
+
+  const startDateInput = document.getElementById("start-date");
+  const endDateInput = document.getElementById("end-date");
+
+  startDateInput.addEventListener("input", () => {
+    const startDateValue = new Date(startDateInput.value);
+    const endDateInputVal = new Date(endDateInput.value);
+
+    let minDate = startDateValue.toISOString("ru-RU").slice(0, -5);
+    console.log(minDate);
+    endDateInput.min = minDate;
+    endDateInput.value = "";
+    endDateInput.disabled = false;
+    endDateInput.addEventListener("input", () => {
+      const endDateValue = new Date(endDateInput.value);
+      if (endDateValue < startDateValue) {
+        endDateInput.value = "";
+        alert("Дата окончания не может быть раньше даты начала");
+        console.log(calculateTimeDifference());
+      }
+    });
+  });
+  // рассчёт временного промежутка между двумя датами
+  function calculateTimeDifference() {
+    const startDateValue = new Date(startDateInput.value);
+    const endDateValue = new Date(endDateInput.value);
+
+    let timeDifference =
+      (endDateValue.getTime() - startDateValue.getTime()) / 1000; // convert to seconds
+
+    if (timeDifference < 3600) {
+      // less than an hour
+      timeDifference /= 60; // convert to minutes
+      timeDifference = Math.ceil(timeDifference); // round up to the nearest minute
+    } else if (timeDifference >= 3600 && timeDifference < 86400) {
+      // more than an hour, but less than a day
+      timeDifference /= 3600; // convert to hours
+      timeDifference = Math.ceil(timeDifference); // round up to the nearest hour
+    } else {
+      // more than a day
+      timeDifference /= 86400; // convert to days
+      timeDifference = Math.ceil(timeDifference); // round up to the nearest day
+    }
+
+    return `${timeDifference} ${getUnit(timeDifference)}`;
+  }
+
+  function getUnit(value) {
+    if (value < 1) return "минут";
+    else if (value >= 1 && value < 24) return "часов";
+    else return "дней";
+  }
+
+  function renderColorToScore() {
+    scoreOptions.innerHTML =
+      '<p class="scoreTitle">Цвет</p> <p>......................</p> <p class="scoreColorValue">Любой</p>';
+  }
 
   //радио кнопки на странице "МОДЕЛЬ"
   allModelBtn.addEventListener("change", () => {
@@ -384,6 +452,7 @@ window.onload = () => {
       carCards.innerHTML = "";
       renderModels(pointIndex);
       scoreBtn.textContent = "Дополнительно";
+      renderColors();
       return;
     }
     if (scoreBtn.textContent === "Дополнительно") {
@@ -391,7 +460,7 @@ window.onload = () => {
       options.classList.remove("hidden");
       orderNavModel.classList.remove("order-nav-active");
       orderNavOptions.classList.add("order-nav-active");
-      renderColors();
+      renderColorToScore();
       scoreBtn.textContent = "Итого";
       return;
     }
