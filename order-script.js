@@ -1,3 +1,16 @@
+let finalOrder = {
+  city: "",
+  pointAdress: "",
+  model: "",
+  options: {
+    color: "",
+    time: "",
+    tariff: "",
+    fullFuel: false,
+    babySeat: false,
+  },
+  price: 0,
+};
 const carsArray = [
   {
     id: 1,
@@ -245,10 +258,17 @@ function generateRandomPhoneNumber() {
   phone += "-" + code;
   return phone;
 }
+
 function renderColors() {
   const optionsColor = document.querySelector(".optionsColor");
   optionsColor.innerHTML =
-    '<p>Цвет</p> <input type="radio" name="color" id="allColors" checked> <label for="color">Любой</label>';
+    '<p>Цвет</p> <input type="radio" name="color" id="allColors" checked> <label for="allColors">Любой</label>';
+  let allColors = document.getElementById("allColors");
+  allColors.addEventListener("change", () => {
+    if (allColors.checked) {
+      document.querySelector(".scoreColorValue").textContent = "Любой";
+    }
+  });
   currentCar.colors.forEach((color) => {
     let newColor = document.createElement("input");
     newColor.type = "radio";
@@ -266,6 +286,11 @@ function renderColors() {
       "for",
       color + currentCar.colors.findIndex((c) => c === color)
     );
+    newColor.addEventListener("change", () => {
+      if (newColor.checked) {
+        document.querySelector(".scoreColorValue").textContent = newColor.value;
+      }
+    });
     optionsColor.appendChild(newColorLabel);
   });
 }
@@ -297,6 +322,77 @@ window.onload = () => {
   const allModelBtn = document.getElementById("allModel");
   const economicBtn = document.getElementById("economic");
   const premiumBtn = document.getElementById("premium");
+
+  const startDateInput = document.getElementById("start-date");
+  const endDateInput = document.getElementById("end-date");
+
+  startDateInput.addEventListener("input", () => {
+    const startDateValue = new Date(startDateInput.value);
+    const endDateInputVal = new Date(endDateInput.value);
+
+    let minDate = startDateValue.toISOString("ru-RU").slice(0, -5);
+    console.log(minDate);
+    endDateInput.min = minDate;
+    endDateInput.value = "";
+    endDateInput.disabled = false;
+    endDateInput.addEventListener("input", () => {
+      const endDateValue = new Date(endDateInput.value);
+      if (endDateValue < startDateValue) {
+        endDateInput.value = "";
+        alert("Дата окончания не может быть раньше даты начала");
+      }
+      renderPeriodToScore();
+    });
+  });
+  // рассчёт временного промежутка между двумя датами
+  function calculateTimeDifference() {
+    const startDateValue = new Date(startDateInput.value);
+    const endDateValue = new Date(endDateInput.value);
+
+    let timeDifference =
+      (endDateValue.getTime() - startDateValue.getTime()) / 1000; // конвертируем в секунды
+    console.log(endDateValue.getTime() - startDateValue.getTime() / 1000);
+    if (timeDifference < 3600) {
+      // если меньше 1 часа
+      timeDifference /= 60; // конвертируем в минуты
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " минут"; // возвращаем время в минутах
+    } else if (timeDifference >= 3600 && timeDifference < 86400) {
+      // если больше часа, но меньше 1 дня
+      timeDifference /= 3600; // конвертируем в часы
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " часов"; // возвращаем время в часах
+    } else {
+      // больше 1 дня
+      timeDifference /= 86400; // конвертируем в дни
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " дней"; // возвращаем время в днях
+    }
+  }
+
+  // function getUnit(value) {
+  //   if (value < 1) return "минут";
+  //   else if (value >= 1 && value < 24) return "часов";
+  //   else return "дней";
+  // }
+
+  function renderPeriodToScore() {
+    if (document.querySelector(".scorePeriod")) {
+      document.querySelector(".scorePeriod").remove();
+    }
+    let newPeriod = document.createElement("div");
+    newPeriod.classList.add("scorePeriod");
+    newPeriod.innerHTML =
+      '<p class="scoreTitle">Срок аренды</p> <p>......................</p> <p class="scorePeriodValue">' +
+      calculateTimeDifference() +
+      "</p>";
+    scoreOptions.appendChild(newPeriod);
+    scoreBtn.disabled = false;
+  }
+  function renderColorToScore() {
+    scoreOptions.innerHTML =
+      '<div><p class="scoreTitle">Цвет</p> <p>......................</p> <p class="scoreColorValue">Любой</p></div>';
+  }
 
   //радио кнопки на странице "МОДЕЛЬ"
   allModelBtn.addEventListener("change", () => {
@@ -370,6 +466,7 @@ window.onload = () => {
       carCards.innerHTML = "";
       renderModels(pointIndex);
       scoreBtn.textContent = "Дополнительно";
+      renderColors();
       return;
     }
     if (scoreBtn.textContent === "Дополнительно") {
@@ -377,7 +474,7 @@ window.onload = () => {
       options.classList.remove("hidden");
       orderNavModel.classList.remove("order-nav-active");
       orderNavOptions.classList.add("order-nav-active");
-      renderColors();
+      renderColorToScore();
       scoreBtn.textContent = "Итого";
       return;
     }
