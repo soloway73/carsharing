@@ -4,8 +4,8 @@ let finalOrder = {
   model: "",
   options: {
     color: "",
-    time: "",
-    tariff: "",
+    period: "",
+    tariff: "На сутки",
     fullFuel: false,
     babySeat: false,
   },
@@ -289,6 +289,7 @@ function renderColors() {
     newColor.addEventListener("change", () => {
       if (newColor.checked) {
         document.querySelector(".scoreColorValue").textContent = newColor.value;
+        finalOrder["options"]["color"] = newColor.value;
       }
     });
     optionsColor.appendChild(newColorLabel);
@@ -322,16 +323,23 @@ window.onload = () => {
   const allModelBtn = document.getElementById("allModel");
   const economicBtn = document.getElementById("economic");
   const premiumBtn = document.getElementById("premium");
-
+  const tariffInputs = document.querySelectorAll("input[name='tariff']");
   const startDateInput = document.getElementById("start-date");
   const endDateInput = document.getElementById("end-date");
+
+  startDateInput.min = new Date()
+    .toISOString()
+    .slice(0, new Date().toISOString().lastIndexOf(":"));
 
   startDateInput.addEventListener("input", () => {
     const startDateValue = new Date(startDateInput.value);
     const endDateInputVal = new Date(endDateInput.value);
-
+    for (let i = 0; i < tariffInputs.length; i++) {
+      tariffInputs[i].addEventListener("change", () => {
+        renderTariffToScore();
+      });
+    }
     let minDate = startDateValue.toISOString("ru-RU").slice(0, -5);
-    console.log(minDate);
     endDateInput.min = minDate;
     endDateInput.value = "";
     endDateInput.disabled = false;
@@ -342,6 +350,7 @@ window.onload = () => {
         alert("Дата окончания не может быть раньше даты начала");
       }
       renderPeriodToScore();
+      renderTariffToScore();
     });
   });
   // рассчёт временного промежутка между двумя датами
@@ -351,7 +360,6 @@ window.onload = () => {
 
     let timeDifference =
       (endDateValue.getTime() - startDateValue.getTime()) / 1000; // конвертируем в секунды
-    console.log(endDateValue.getTime() - startDateValue.getTime() / 1000);
     if (timeDifference < 3600) {
       // если меньше 1 часа
       timeDifference /= 60; // конвертируем в минуты
@@ -370,7 +378,7 @@ window.onload = () => {
     }
   }
 
-  // function getUnit(value) {
+  // function getUnit(value) {perio
   //   if (value < 1) return "минут";
   //   else if (value >= 1 && value < 24) return "часов";
   //   else return "дней";
@@ -386,8 +394,35 @@ window.onload = () => {
       '<p class="scoreTitle">Срок аренды</p> <p>......................</p> <p class="scorePeriodValue">' +
       calculateTimeDifference() +
       "</p>";
+    finalOrder["options"]["period"] = calculateTimeDifference();
     scoreOptions.appendChild(newPeriod);
     scoreBtn.disabled = false;
+  }
+
+  function renderTariffToScore() {
+    if (document.querySelector(".scoreTariff")) {
+      document.querySelector(".scoreTariff").remove();
+    }
+    const getTariffValue = () => {
+      let result = "";
+      for (let i = 0; i < tariffInputs.length; i++) {
+        if (tariffInputs[i].checked) {
+          result = tariffInputs[i].getAttribute("id");
+        }
+      }
+      if (result === "daily") {
+        return "На сутки";
+      } else if (result === "minutely") {
+        return "Поминутно";
+      }
+    };
+    let scoreTariff = document.createElement("div");
+    scoreTariff.classList.add("scoreTariff");
+    scoreTariff.innerHTML =
+      '<p class="scoreTitle">Тариф</p> <p>......................</p> <p class="scoreTariffValue">' +
+      getTariffValue() +
+      "</p>";
+    scoreOptions.appendChild(scoreTariff);
   }
   function renderColorToScore() {
     scoreOptions.innerHTML =
@@ -444,7 +479,8 @@ window.onload = () => {
           point.city === inputDropdown.value &&
           point.adress === inputPoint.value
       );
-
+      finalOrder["city"] = inputDropdown.value;
+      finalOrder["pointAdress"] = inputPoint.value;
       orderNavLocation.classList.remove("order-nav-active");
       orderNavModel.classList.add("order-nav-active");
       // слушатель событий на хлебные крошки "МОДЕЛЬ"
@@ -470,6 +506,7 @@ window.onload = () => {
       return;
     }
     if (scoreBtn.textContent === "Дополнительно") {
+      finalOrder["options"]["color"] = "Любой";
       model.classList.add("hidden");
       options.classList.remove("hidden");
       orderNavModel.classList.remove("order-nav-active");
@@ -509,6 +546,7 @@ window.onload = () => {
         carImg.src = car.img;
         carCard.appendChild(carImg);
         carCard.addEventListener("click", () => {
+          finalOrder["model"] = car.name;
           currentCar = car;
           let allCards = document.querySelectorAll(".carCard");
           allCards.forEach((card) => {
