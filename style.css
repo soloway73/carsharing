@@ -1126,3 +1126,10 @@ input[type="datetime-local"] {
 .options p {
   margin-top: 32px;
 }
+.advanced {
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  & label {
+    margin-top: auto;
+  }
+}

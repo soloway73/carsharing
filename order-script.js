@@ -4,10 +4,11 @@ let finalOrder = {
   model: "",
   options: {
     color: "",
-    time: "",
-    tariff: "",
+    period: "", // время аренды в минутах
+    tariff: "На сутки",
     fullFuel: false,
     babySeat: false,
+    rightWheel: false,
   },
   price: 0,
 };
@@ -204,6 +205,28 @@ const pointsArray = [
   },
 ];
 
+function minutesToDays() {
+  return Math.ceil(finalOrder["options"]["period"] / 1440);
+}
+function getFinalPrice() {
+  let result = 0;
+  if (finalOrder["options"]["tariff"] === "На сутки") {
+    result = minutesToDays() * 1999;
+  } else {
+    result = finalOrder["options"]["period"] * 7;
+  }
+  if (finalOrder["options"]["fullFuel"] === true) {
+    result += 2000;
+  }
+  if (finalOrder["options"]["babySeat"] === true) {
+    result += 1000;
+  }
+  if (finalOrder["options"]["rightWheel"] === true) {
+    result += 3000;
+  }
+  finalOrder.price = result;
+  document.querySelector(".scorePrice").textContent = finalOrder.price + " ₽";
+}
 function getminMaxPrice(city) {
   let min = 999999;
   let max = 0;
@@ -289,6 +312,7 @@ function renderColors() {
     newColor.addEventListener("change", () => {
       if (newColor.checked) {
         document.querySelector(".scoreColorValue").textContent = newColor.value;
+        finalOrder["options"]["color"] = newColor.value;
       }
     });
     optionsColor.appendChild(newColorLabel);
@@ -322,16 +346,72 @@ window.onload = () => {
   const allModelBtn = document.getElementById("allModel");
   const economicBtn = document.getElementById("economic");
   const premiumBtn = document.getElementById("premium");
-
+  const tariffInputs = document.querySelectorAll("input[name='tariff']");
   const startDateInput = document.getElementById("start-date");
   const endDateInput = document.getElementById("end-date");
+  const fullFuel = document.getElementById("fuel");
+  const childSeat = document.getElementById("childSeat");
+  const rightWheel = document.getElementById("wheel");
+
+  fullFuel.addEventListener("change", () => {
+    if (fullFuel.checked) {
+      finalOrder["options"]["fullFuel"] = true;
+      let fuelInScore = document.createElement("div");
+      fuelInScore.classList.add("fuelInScore");
+      fuelInScore.innerHTML =
+        '<p class="scoreTitle">Полный бак</p> <p>......................</p> <p class="scorePeriodValue">Да</p>';
+      scoreOptions.appendChild(fuelInScore);
+    } else {
+      finalOrder["options"]["fullFuel"] = false;
+      document.querySelector(".fuelInScore")?.remove();
+    }
+    getFinalPrice();
+  });
+
+  childSeat.addEventListener("change", () => {
+    if (childSeat.checked) {
+      finalOrder["options"]["babySeat"] = true;
+      let childSeatInScore = document.createElement("div");
+      childSeatInScore.classList.add("childSeatInScore");
+      childSeatInScore.innerHTML =
+        '<p class="scoreTitle">Детское кресло</p> <p>......................</p> <p class="scorePeriodValue">Да</p>';
+      scoreOptions.appendChild(childSeatInScore);
+    } else {
+      finalOrder["options"]["babySeat"] = false;
+      document.querySelector(".childSeatInScore")?.remove();
+    }
+    getFinalPrice();
+  });
+
+  rightWheel.addEventListener("change", () => {
+    if (rightWheel.checked) {
+      finalOrder["options"]["rightWheel"] = true;
+      let rightWheelInScore = document.createElement("div");
+      rightWheelInScore.classList.add("rightWheelInScore");
+      rightWheelInScore.innerHTML =
+        '<p class="scoreTitle">Правый руль</p> <p>......................</p> <p class="scorePeriodValue">Да</p>';
+      scoreOptions.appendChild(rightWheelInScore);
+    } else {
+      finalOrder["options"]["rightWheel"] = false;
+      document.querySelector(".rightWheelInScore")?.remove();
+    }
+    getFinalPrice();
+  });
+  startDateInput.min = new Date()
+    .toISOString()
+    .slice(0, new Date().toISOString().lastIndexOf(":"));
 
   startDateInput.addEventListener("input", () => {
     const startDateValue = new Date(startDateInput.value);
     const endDateInputVal = new Date(endDateInput.value);
-
+    for (let i = 0; i < tariffInputs.length; i++) {
+      tariffInputs[i].addEventListener("change", () => {
+        renderTariffToScore();
+        getFinalPrice();
+        console.log(finalOrder);
+      });
+    }
     let minDate = startDateValue.toISOString("ru-RU").slice(0, -5);
-    console.log(minDate);
     endDateInput.min = minDate;
     endDateInput.value = "";
     endDateInput.disabled = false;
@@ -342,6 +422,8 @@ window.onload = () => {
         alert("Дата окончания не может быть раньше даты начала");
       }
       renderPeriodToScore();
+      renderTariffToScore();
+      getFinalPrice();
     });
   });
   // рассчёт временного промежутка между двумя датами
@@ -351,7 +433,8 @@ window.onload = () => {
 
     let timeDifference =
       (endDateValue.getTime() - startDateValue.getTime()) / 1000; // конвертируем в секунды
-    console.log(endDateValue.getTime() - startDateValue.getTime() / 1000);
+    finalOrder["options"]["period"] =
+      (endDateValue.getTime() - startDateValue.getTime()) / 1000 / 60; // конвертируем в минуты и отправляем в объект конечного счёта
     if (timeDifference < 3600) {
       // если меньше 1 часа
       timeDifference /= 60; // конвертируем в минуты
@@ -370,7 +453,7 @@ window.onload = () => {
     }
   }
 
-  // function getUnit(value) {
+  // function getUnit(value) {perio
   //   if (value < 1) return "минут";
   //   else if (value >= 1 && value < 24) return "часов";
   //   else return "дней";
@@ -388,6 +471,34 @@ window.onload = () => {
       "</p>";
     scoreOptions.appendChild(newPeriod);
     scoreBtn.disabled = false;
+  }
+
+  function renderTariffToScore() {
+    if (document.querySelector(".scoreTariff")) {
+      document.querySelector(".scoreTariff").remove();
+    }
+    const getTariffValue = () => {
+      let result = "";
+      for (let i = 0; i < tariffInputs.length; i++) {
+        if (tariffInputs[i].checked) {
+          result = tariffInputs[i].getAttribute("id");
+        }
+      }
+      if (result === "daily") {
+        finalOrder["options"]["tariff"] = "На сутки";
+        return "На сутки";
+      } else if (result === "minutely") {
+        finalOrder["options"]["tariff"] = "Поминутно";
+        return "Поминутно";
+      }
+    };
+    let scoreTariff = document.createElement("div");
+    scoreTariff.classList.add("scoreTariff");
+    scoreTariff.innerHTML =
+      '<p class="scoreTitle">Тариф</p> <p>......................</p> <p class="scoreTariffValue">' +
+      getTariffValue() +
+      "</p>";
+    scoreOptions.appendChild(scoreTariff);
   }
   function renderColorToScore() {
     scoreOptions.innerHTML =
@@ -444,7 +555,8 @@ window.onload = () => {
           point.city === inputDropdown.value &&
           point.adress === inputPoint.value
       );
-
+      finalOrder["city"] = inputDropdown.value;
+      finalOrder["pointAdress"] = inputPoint.value;
       orderNavLocation.classList.remove("order-nav-active");
       orderNavModel.classList.add("order-nav-active");
       // слушатель событий на хлебные крошки "МОДЕЛЬ"
@@ -470,6 +582,7 @@ window.onload = () => {
       return;
     }
     if (scoreBtn.textContent === "Дополнительно") {
+      finalOrder["options"]["color"] = "Любой";
       model.classList.add("hidden");
       options.classList.remove("hidden");
       orderNavModel.classList.remove("order-nav-active");
@@ -481,6 +594,8 @@ window.onload = () => {
     if (scoreBtn.textContent === "Итого") {
       options.classList.add("hidden");
       result.classList.remove("hidden");
+      orderNavOptions.classList.remove("order-nav-active");
+      orderNavResult.classList.add("order-nav-active");
       scoreBtn.textContent = "Заказать";
       return;
     }
@@ -509,6 +624,7 @@ window.onload = () => {
         carImg.src = car.img;
         carCard.appendChild(carImg);
         carCard.addEventListener("click", () => {
+          finalOrder["model"] = car.name;
           currentCar = car;
           let allCards = document.querySelectorAll(".carCard");
           allCards.forEach((card) => {
