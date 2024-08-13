@@ -4,7 +4,7 @@ let finalOrder = {
   model: "",
   options: {
     color: "",
-    period: "",
+    period: "", // время аренды в минутах
     tariff: "На сутки",
     fullFuel: false,
     babySeat: false,
@@ -204,6 +204,18 @@ const pointsArray = [
   },
 ];
 
+function minutesToDays() {
+  return Math.ceil(finalOrder["options"]["period"] / 1440);
+}
+function getFinalPrice() {
+  if (finalOrder["options"]["tariff"] === "На сутки") {
+    finalOrder.price = minutesToDays() * 1999 + " ₽";
+    document.querySelector(".scorePrice").textContent = finalOrder.price + " ₽";
+  } else {
+    finalOrder.price = finalOrder["options"]["period"] * 7 + " ₽";
+    document.querySelector(".scorePrice").textContent = finalOrder.price + " ₽";
+  }
+}
 function getminMaxPrice(city) {
   let min = 999999;
   let max = 0;
@@ -337,6 +349,8 @@ window.onload = () => {
     for (let i = 0; i < tariffInputs.length; i++) {
       tariffInputs[i].addEventListener("change", () => {
         renderTariffToScore();
+        getFinalPrice();
+        console.log(finalOrder);
       });
     }
     let minDate = startDateValue.toISOString("ru-RU").slice(0, -5);
@@ -360,6 +374,8 @@ window.onload = () => {
 
     let timeDifference =
       (endDateValue.getTime() - startDateValue.getTime()) / 1000; // конвертируем в секунды
+    finalOrder["options"]["period"] =
+      (endDateValue.getTime() - startDateValue.getTime()) / 1000 / 60; // конвертируем в минуты и отправляем в объект конечного счёта
     if (timeDifference < 3600) {
       // если меньше 1 часа
       timeDifference /= 60; // конвертируем в минуты
@@ -394,7 +410,6 @@ window.onload = () => {
       '<p class="scoreTitle">Срок аренды</p> <p>......................</p> <p class="scorePeriodValue">' +
       calculateTimeDifference() +
       "</p>";
-    finalOrder["options"]["period"] = calculateTimeDifference();
     scoreOptions.appendChild(newPeriod);
     scoreBtn.disabled = false;
   }
@@ -411,8 +426,10 @@ window.onload = () => {
         }
       }
       if (result === "daily") {
+        finalOrder["options"]["tariff"] = "На сутки";
         return "На сутки";
       } else if (result === "minutely") {
+        finalOrder["options"]["tariff"] = "Поминутно";
         return "Поминутно";
       }
     };
