@@ -281,6 +281,7 @@ function generateRandomPhoneNumber() {
   phone += "-" + code;
   return phone;
 }
+let currentCar = carsArray[0];
 
 function renderColors() {
   const optionsColor = document.querySelector(".optionsColor");
@@ -318,7 +319,6 @@ function renderColors() {
     optionsColor.appendChild(newColorLabel);
   });
 }
-let currentCar = carsArray[0];
 window.onload = () => {
   const orderNavLocation = document.getElementById("orderNavLocation");
   const orderNavModel = document.getElementById("orderNavModel");
@@ -402,13 +402,11 @@ window.onload = () => {
     .slice(0, new Date().toISOString().lastIndexOf(":"));
 
   startDateInput.addEventListener("input", () => {
-    const startDateValue = new Date(startDateInput.value);
-    const endDateInputVal = new Date(endDateInput.value);
+    let startDateValue = new Date(startDateInput.value);
     for (let i = 0; i < tariffInputs.length; i++) {
       tariffInputs[i].addEventListener("change", () => {
         renderTariffToScore();
         getFinalPrice();
-        console.log(finalOrder);
       });
     }
     let minDate = startDateValue.toISOString("ru-RU").slice(0, -5);
@@ -416,8 +414,10 @@ window.onload = () => {
     endDateInput.value = "";
     endDateInput.disabled = false;
     endDateInput.addEventListener("input", () => {
-      const endDateValue = new Date(endDateInput.value);
-      if (endDateValue < startDateValue) {
+      const endDateInputVal = new Date(endDateInput.value);
+      //const endDateValue = new Date(endDateInput.value);
+      startDateValue = new Date(startDateInput.value);
+      if (endDateInputVal < startDateValue) {
         endDateInput.value = "";
         alert("Дата окончания не может быть раньше даты начала");
       }
@@ -561,6 +561,12 @@ window.onload = () => {
       orderNavModel.classList.add("order-nav-active");
       // слушатель событий на хлебные крошки "МОДЕЛЬ"
       orderNavModel.addEventListener("click", () => {
+        startDateInput.value = "";
+        endDateInput.value = "";
+        allColors.checked = true;
+        childSeat.checked = false;
+        rightWheel.checked = false;
+        fullFuel.checked = false;
         orderNavModel.classList.add("order-nav-active");
         orderNavLocation.classList.remove("order-nav-active");
         orderNavOptions.classList.remove("order-nav-active");
@@ -570,7 +576,7 @@ window.onload = () => {
         options.classList.add("hidden");
         result.classList.add("hidden");
         scoreBtn.textContent = "Дополнительно";
-        scoreBtn.disabled = false;
+        scoreBtn.disabled = true;
         scoreOptions.innerHTML = "";
       });
       location.classList.add("hidden");
@@ -578,15 +584,28 @@ window.onload = () => {
       carCards.innerHTML = "";
       renderModels(pointIndex);
       scoreBtn.textContent = "Дополнительно";
-      renderColors();
+
       return;
     }
     if (scoreBtn.textContent === "Дополнительно") {
+      orderNavOptions.addEventListener("click", () => {
+        orderNavOptions.classList.add("order-nav-active");
+        orderNavLocation.classList.remove("order-nav-active");
+        orderNavModel.classList.remove("order-nav-active");
+        orderNavResult.classList.remove("order-nav-active");
+        location.classList.add("hidden");
+        model.classList.add("hidden");
+        options.classList.remove("hidden");
+        result.classList.add("hidden");
+        scoreBtn.textContent = "Итого";
+        scoreBtn.disabled = true;
+      });
       finalOrder["options"]["color"] = "Любой";
       model.classList.add("hidden");
       options.classList.remove("hidden");
       orderNavModel.classList.remove("order-nav-active");
       orderNavOptions.classList.add("order-nav-active");
+      renderColors();
       renderColorToScore();
       scoreBtn.textContent = "Итого";
       return;
@@ -889,7 +908,6 @@ window.onload = () => {
         document.body.classList.toggle("lock");
         menuBody.classList.toggle("_active");
         this.classList.toggle("_active");
-        desktop.classList.toggle("blacked");
       });
     }
   }
