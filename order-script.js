@@ -352,6 +352,11 @@ window.onload = () => {
   const fullFuel = document.getElementById("fuel");
   const childSeat = document.getElementById("childSeat");
   const rightWheel = document.getElementById("wheel");
+  const carModelResult = document.getElementById("carModelResult");
+  const carPlateResult = document.getElementById("carPlateResult");
+  const fuelResult = document.querySelector(".fuelResult");
+  const accessResult = document.querySelector(".accessResult");
+  const carImg = document.querySelector(".carImg");
 
   fullFuel.addEventListener("change", () => {
     if (fullFuel.checked) {
