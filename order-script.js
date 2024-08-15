@@ -204,7 +204,19 @@ const pointsArray = [
     geoposition: [55.750945, 37.719378],
   },
 ];
+//генерируем случайный гос номер для авто
+function generateRussianCarNumber() {
+  let letters = "АВЕКМНОРСТХ";
+  let numbers = Math.floor(Math.random() * 999);
+  let letter1 = letters.charAt(Math.floor(Math.random() * letters.length));
+  let letter2 = letters.charAt(Math.floor(Math.random() * letters.length));
+  let letter3 = letters.charAt(Math.floor(Math.random() * letters.length));
+  let numberPart = numbers.toString();
+  let randomRegion = Math.floor(Math.random() * 99);
+  return `${letter1} ${numberPart} ${letter2}${letter3} ${randomRegion}`;
+}
 
+console.log(generateRussianCarNumber());
 function minutesToDays() {
   return Math.ceil(finalOrder["options"]["period"] / 1440);
 }
@@ -352,6 +364,11 @@ window.onload = () => {
   const fullFuel = document.getElementById("fuel");
   const childSeat = document.getElementById("childSeat");
   const rightWheel = document.getElementById("wheel");
+  const carModelResult = document.getElementById("carModelResult");
+  const carPlateResult = document.getElementById("carPlateResult");
+  const fuelResult = document.getElementById("fuelResult");
+  const accessResult = document.getElementById("accessResult");
+  const carImgResult = document.getElementById("carImgResult");
 
   fullFuel.addEventListener("change", () => {
     if (fullFuel.checked) {
@@ -598,7 +615,6 @@ window.onload = () => {
         options.classList.remove("hidden");
         result.classList.add("hidden");
         scoreBtn.textContent = "Итого";
-        scoreBtn.disabled = true;
       });
       finalOrder["options"]["color"] = "Любой";
       model.classList.add("hidden");
@@ -611,11 +627,40 @@ window.onload = () => {
       return;
     }
     if (scoreBtn.textContent === "Итого") {
+      carModelResult.textContent = currentCar.name;
+      carPlateResult.textContent = generateRussianCarNumber();
+      fuelResult.querySelector("span").textContent = "100%";
+      accessResult.querySelector("span").textContent = startDateInput.value
+        .toString()
+        .replace("T", " ");
+      let newImg = document.createElement("img");
+      newImg.src = currentCar.img;
+      newImg.width = "256";
+      carImgResult.innerHTML = "";
+      carImgResult.appendChild(newImg);
       options.classList.add("hidden");
       result.classList.remove("hidden");
       orderNavOptions.classList.remove("order-nav-active");
       orderNavResult.classList.add("order-nav-active");
       scoreBtn.textContent = "Заказать";
+      scoreBtn.disabled = false;
+      return;
+    }
+    if (scoreBtn.textContent === "Заказать") {
+      scoreBtn.style.background =
+        "linear-gradient(90deg, #493013 0%, #7B0C3B 100%)";
+      scoreBtn.textContent = "Отменить";
+      document.getElementById("checkOrder").textContent =
+        "Ваш заказ подтверждён";
+      scoreBtn.disabled = false;
+      return;
+    }
+    if (scoreBtn.textContent === "Отменить") {
+      scoreBtn.textContent = "Заказать";
+      scoreBtn.style.background =
+        "linear-gradient(90deg, #0ec261 2.61%, #039f67 112.6%)";
+      document.getElementById("checkOrder").innerHTML = "";
+      scoreBtn.disabled = false;
       return;
     }
   });
