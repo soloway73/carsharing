@@ -1,3 +1,17 @@
+let finalOrder = {
+  city: "",
+  pointAdress: "",
+  model: "",
+  options: {
+    color: "",
+    period: "", // время аренды в минутах
+    tariff: "На сутки",
+    fullFuel: false,
+    babySeat: false,
+    rightWheel: false,
+  },
+  price: 0,
+};
 const carsArray = [
   {
     id: 1,
@@ -190,7 +204,41 @@ const pointsArray = [
     geoposition: [55.750945, 37.719378],
   },
 ];
+//генерируем случайный гос номер для авто
+function generateRussianCarNumber() {
+  let letters = "АВЕКМНОРСТХ";
+  let numbers = Math.floor(Math.random() * 999);
+  let letter1 = letters.charAt(Math.floor(Math.random() * letters.length));
+  let letter2 = letters.charAt(Math.floor(Math.random() * letters.length));
+  let letter3 = letters.charAt(Math.floor(Math.random() * letters.length));
+  let numberPart = numbers.toString();
+  let randomRegion = Math.floor(Math.random() * 99);
+  return `${letter1} ${numberPart} ${letter2}${letter3} ${randomRegion}`;
+}
 
+console.log(generateRussianCarNumber());
+function minutesToDays() {
+  return Math.ceil(finalOrder["options"]["period"] / 1440);
+}
+function getFinalPrice() {
+  let result = 0;
+  if (finalOrder["options"]["tariff"] === "На сутки") {
+    result = minutesToDays() * 1999;
+  } else {
+    result = finalOrder["options"]["period"] * 7;
+  }
+  if (finalOrder["options"]["fullFuel"] === true) {
+    result += 2000;
+  }
+  if (finalOrder["options"]["babySeat"] === true) {
+    result += 1000;
+  }
+  if (finalOrder["options"]["rightWheel"] === true) {
+    result += 3000;
+  }
+  finalOrder.price = result;
+  document.querySelector(".scorePrice").textContent = finalOrder.price + " ₽";
+}
 function getminMaxPrice(city) {
   let min = 999999;
   let max = 0;
@@ -245,10 +293,18 @@ function generateRandomPhoneNumber() {
   phone += "-" + code;
   return phone;
 }
+let currentCar = carsArray[0];
+
 function renderColors() {
   const optionsColor = document.querySelector(".optionsColor");
   optionsColor.innerHTML =
-    '<p>Цвет</p> <input type="radio" name="color" id="allColors"> <label for="color">Любой</label>';
+    '<p>Цвет</p> <input type="radio" name="color" id="allColors" checked> <label for="allColors">Любой</label>';
+  let allColors = document.getElementById("allColors");
+  allColors.addEventListener("change", () => {
+    if (allColors.checked) {
+      document.querySelector(".scoreColorValue").textContent = "Любой";
+    }
+  });
   currentCar.colors.forEach((color) => {
     let newColor = document.createElement("input");
     newColor.type = "radio";
@@ -266,10 +322,15 @@ function renderColors() {
       "for",
       color + currentCar.colors.findIndex((c) => c === color)
     );
+    newColor.addEventListener("change", () => {
+      if (newColor.checked) {
+        document.querySelector(".scoreColorValue").textContent = newColor.value;
+        finalOrder["options"]["color"] = newColor.value;
+      }
+    });
     optionsColor.appendChild(newColorLabel);
   });
 }
-let currentCar = carsArray[0];
 window.onload = () => {
   const orderNavLocation = document.getElementById("orderNavLocation");
   const orderNavModel = document.getElementById("orderNavModel");
@@ -297,6 +358,169 @@ window.onload = () => {
   const allModelBtn = document.getElementById("allModel");
   const economicBtn = document.getElementById("economic");
   const premiumBtn = document.getElementById("premium");
+  const tariffInputs = document.querySelectorAll("input[name='tariff']");
+  const startDateInput = document.getElementById("start-date");
+  const endDateInput = document.getElementById("end-date");
+  const fullFuel = document.getElementById("fuel");
+  const childSeat = document.getElementById("childSeat");
+  const rightWheel = document.getElementById("wheel");
+  const carModelResult = document.getElementById("carModelResult");
+  const carPlateResult = document.getElementById("carPlateResult");
+  const fuelResult = document.getElementById("fuelResult");
+  const accessResult = document.getElementById("accessResult");
+  const carImgResult = document.getElementById("carImgResult");
+
+  fullFuel.addEventListener("change", () => {
+    if (fullFuel.checked) {
+      finalOrder["options"]["fullFuel"] = true;
+      let fuelInScore = document.createElement("div");
+      fuelInScore.classList.add("fuelInScore");
+      fuelInScore.innerHTML =
+        '<p class="scoreTitle">Полный бак</p> <p>......................</p> <p class="scorePeriodValue">Да</p>';
+      scoreOptions.appendChild(fuelInScore);
+    } else {
+      finalOrder["options"]["fullFuel"] = false;
+      document.querySelector(".fuelInScore")?.remove();
+    }
+    getFinalPrice();
+  });
+
+  childSeat.addEventListener("change", () => {
+    if (childSeat.checked) {
+      finalOrder["options"]["babySeat"] = true;
+      let childSeatInScore = document.createElement("div");
+      childSeatInScore.classList.add("childSeatInScore");
+      childSeatInScore.innerHTML =
+        '<p class="scoreTitle">Детское кресло</p> <p>......................</p> <p class="scorePeriodValue">Да</p>';
+      scoreOptions.appendChild(childSeatInScore);
+    } else {
+      finalOrder["options"]["babySeat"] = false;
+      document.querySelector(".childSeatInScore")?.remove();
+    }
+    getFinalPrice();
+  });
+
+  rightWheel.addEventListener("change", () => {
+    if (rightWheel.checked) {
+      finalOrder["options"]["rightWheel"] = true;
+      let rightWheelInScore = document.createElement("div");
+      rightWheelInScore.classList.add("rightWheelInScore");
+      rightWheelInScore.innerHTML =
+        '<p class="scoreTitle">Правый руль</p> <p>......................</p> <p class="scorePeriodValue">Да</p>';
+      scoreOptions.appendChild(rightWheelInScore);
+    } else {
+      finalOrder["options"]["rightWheel"] = false;
+      document.querySelector(".rightWheelInScore")?.remove();
+    }
+    getFinalPrice();
+  });
+  startDateInput.min = new Date()
+    .toISOString()
+    .slice(0, new Date().toISOString().lastIndexOf(":"));
+
+  startDateInput.addEventListener("input", () => {
+    let startDateValue = new Date(startDateInput.value);
+    for (let i = 0; i < tariffInputs.length; i++) {
+      tariffInputs[i].addEventListener("change", () => {
+        renderTariffToScore();
+        getFinalPrice();
+      });
+    }
+    let minDate = startDateValue.toISOString("ru-RU").slice(0, -5);
+    endDateInput.min = minDate;
+    endDateInput.value = "";
+    endDateInput.disabled = false;
+    endDateInput.addEventListener("input", () => {
+      const endDateInputVal = new Date(endDateInput.value);
+      //const endDateValue = new Date(endDateInput.value);
+      startDateValue = new Date(startDateInput.value);
+      if (endDateInputVal < startDateValue) {
+        endDateInput.value = "";
+        alert("Дата окончания не может быть раньше даты начала");
+      }
+      renderPeriodToScore();
+      renderTariffToScore();
+      getFinalPrice();
+    });
+  });
+  // рассчёт временного промежутка между двумя датами
+  function calculateTimeDifference() {
+    const startDateValue = new Date(startDateInput.value);
+    const endDateValue = new Date(endDateInput.value);
+
+    let timeDifference =
+      (endDateValue.getTime() - startDateValue.getTime()) / 1000; // конвертируем в секунды
+    finalOrder["options"]["period"] =
+      (endDateValue.getTime() - startDateValue.getTime()) / 1000 / 60; // конвертируем в минуты и отправляем в объект конечного счёта
+    if (timeDifference < 3600) {
+      // если меньше 1 часа
+      timeDifference /= 60; // конвертируем в минуты
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " минут"; // возвращаем время в минутах
+    } else if (timeDifference >= 3600 && timeDifference < 86400) {
+      // если больше часа, но меньше 1 дня
+      timeDifference /= 3600; // конвертируем в часы
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " часов"; // возвращаем время в часах
+    } else {
+      // больше 1 дня
+      timeDifference /= 86400; // конвертируем в дни
+      timeDifference = Math.ceil(timeDifference); // округляем в большую сторону
+      return timeDifference + " дней"; // возвращаем время в днях
+    }
+  }
+
+  // function getUnit(value) {perio
+  //   if (value < 1) return "минут";
+  //   else if (value >= 1 && value < 24) return "часов";
+  //   else return "дней";
+  // }
+
+  function renderPeriodToScore() {
+    if (document.querySelector(".scorePeriod")) {
+      document.querySelector(".scorePeriod").remove();
+    }
+    let newPeriod = document.createElement("div");
+    newPeriod.classList.add("scorePeriod");
+    newPeriod.innerHTML =
+      '<p class="scoreTitle">Срок аренды</p> <p>......................</p> <p class="scorePeriodValue">' +
+      calculateTimeDifference() +
+      "</p>";
+    scoreOptions.appendChild(newPeriod);
+    scoreBtn.disabled = false;
+  }
+
+  function renderTariffToScore() {
+    if (document.querySelector(".scoreTariff")) {
+      document.querySelector(".scoreTariff").remove();
+    }
+    const getTariffValue = () => {
+      let result = "";
+      for (let i = 0; i < tariffInputs.length; i++) {
+        if (tariffInputs[i].checked) {
+          result = tariffInputs[i].getAttribute("id");
+        }
+      }
+      if (result === "daily") {
+        finalOrder["options"]["tariff"] = "На сутки";
+        return "На сутки";
+      } else if (result === "minutely") {
+        finalOrder["options"]["tariff"] = "Поминутно";
+        return "Поминутно";
+      }
+    };
+    let scoreTariff = document.createElement("div");
+    scoreTariff.classList.add("scoreTariff");
+    scoreTariff.innerHTML =
+      '<p class="scoreTitle">Тариф</p> <p>......................</p> <p class="scoreTariffValue">' +
+      getTariffValue() +
+      "</p>";
+    scoreOptions.appendChild(scoreTariff);
+  }
+  function renderColorToScore() {
+    scoreOptions.innerHTML =
+      '<div><p class="scoreTitle">Цвет</p> <p>......................</p> <p class="scoreColorValue">Любой</p></div>';
+  }
 
   //радио кнопки на странице "МОДЕЛЬ"
   allModelBtn.addEventListener("change", () => {
@@ -348,11 +572,18 @@ window.onload = () => {
           point.city === inputDropdown.value &&
           point.adress === inputPoint.value
       );
-
+      finalOrder["city"] = inputDropdown.value;
+      finalOrder["pointAdress"] = inputPoint.value;
       orderNavLocation.classList.remove("order-nav-active");
       orderNavModel.classList.add("order-nav-active");
       // слушатель событий на хлебные крошки "МОДЕЛЬ"
       orderNavModel.addEventListener("click", () => {
+        startDateInput.value = "";
+        endDateInput.value = "";
+        allColors.checked = true;
+        childSeat.checked = false;
+        rightWheel.checked = false;
+        fullFuel.checked = false;
         orderNavModel.classList.add("order-nav-active");
         orderNavLocation.classList.remove("order-nav-active");
         orderNavOptions.classList.remove("order-nav-active");
@@ -362,7 +593,7 @@ window.onload = () => {
         options.classList.add("hidden");
         result.classList.add("hidden");
         scoreBtn.textContent = "Дополнительно";
-        scoreBtn.disabled = false;
+        scoreBtn.disabled = true;
         scoreOptions.innerHTML = "";
       });
       location.classList.add("hidden");
@@ -370,21 +601,66 @@ window.onload = () => {
       carCards.innerHTML = "";
       renderModels(pointIndex);
       scoreBtn.textContent = "Дополнительно";
+
       return;
     }
     if (scoreBtn.textContent === "Дополнительно") {
+      orderNavOptions.addEventListener("click", () => {
+        orderNavOptions.classList.add("order-nav-active");
+        orderNavLocation.classList.remove("order-nav-active");
+        orderNavModel.classList.remove("order-nav-active");
+        orderNavResult.classList.remove("order-nav-active");
+        location.classList.add("hidden");
+        model.classList.add("hidden");
+        options.classList.remove("hidden");
+        result.classList.add("hidden");
+        scoreBtn.textContent = "Итого";
+      });
+      finalOrder["options"]["color"] = "Любой";
       model.classList.add("hidden");
       options.classList.remove("hidden");
       orderNavModel.classList.remove("order-nav-active");
       orderNavOptions.classList.add("order-nav-active");
       renderColors();
+      renderColorToScore();
       scoreBtn.textContent = "Итого";
       return;
     }
     if (scoreBtn.textContent === "Итого") {
+      carModelResult.textContent = currentCar.name;
+      carPlateResult.textContent = generateRussianCarNumber();
+      fuelResult.querySelector("span").textContent = "100%";
+      accessResult.querySelector("span").textContent = startDateInput.value
+        .toString()
+        .replace("T", " ");
+      let newImg = document.createElement("img");
+      newImg.src = currentCar.img;
+      newImg.width = "256";
+      carImgResult.innerHTML = "";
+      carImgResult.appendChild(newImg);
       options.classList.add("hidden");
       result.classList.remove("hidden");
+      orderNavOptions.classList.remove("order-nav-active");
+      orderNavResult.classList.add("order-nav-active");
       scoreBtn.textContent = "Заказать";
+      scoreBtn.disabled = false;
+      return;
+    }
+    if (scoreBtn.textContent === "Заказать") {
+      scoreBtn.style.background =
+        "linear-gradient(90deg, #493013 0%, #7B0C3B 100%)";
+      scoreBtn.textContent = "Отменить";
+      document.getElementById("checkOrder").textContent =
+        "Ваш заказ подтверждён";
+      scoreBtn.disabled = false;
+      return;
+    }
+    if (scoreBtn.textContent === "Отменить") {
+      scoreBtn.textContent = "Заказать";
+      scoreBtn.style.background =
+        "linear-gradient(90deg, #0ec261 2.61%, #039f67 112.6%)";
+      document.getElementById("checkOrder").innerHTML = "";
+      scoreBtn.disabled = false;
       return;
     }
   });
@@ -412,6 +688,7 @@ window.onload = () => {
         carImg.src = car.img;
         carCard.appendChild(carImg);
         carCard.addEventListener("click", () => {
+          finalOrder["model"] = car.name;
           currentCar = car;
           let allCards = document.querySelectorAll(".carCard");
           allCards.forEach((card) => {
@@ -676,7 +953,6 @@ window.onload = () => {
         document.body.classList.toggle("lock");
         menuBody.classList.toggle("_active");
         this.classList.toggle("_active");
-        desktop.classList.toggle("blacked");
       });
     }
   }

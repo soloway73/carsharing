@@ -913,14 +913,16 @@ a.order-nav-active {
   margin-top: 32px;
 }
 .scoreAdress,
-.scoreModel {
+.scoreModel,
+.scoreOptions div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   gap: 11px;
 }
 .scoreAdress p,
-.scoreModel p {
+.scoreModel p,
+.scoreOptions p {
   font-family: "Roboto";
   font-style: normal;
   font-size: 14px;
@@ -930,7 +932,8 @@ a.order-nav-active {
   margin-top: auto;
 }
 .scoreAdress p:first-child,
-.scoreModel p:first-child {
+.scoreModel p:first-child,
+.scoreOptions p:first-child {
   /* Пункт выдачи */
 
   font-family: "Roboto";
@@ -1065,5 +1068,86 @@ a.order-nav-active {
   color: #999999;
 }
 input[type="radio"]:checked + label {
+  color: #121212;
+}
+.options {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #121212;
+}
+.optionsColor input[type="radio"]:checked + label {
+  color: #121212;
+}
+.optionsColor label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #999999;
+  margin-right: 16px;
+}
+.optionsColor p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #121212;
+  margin-top: 32px;
+}
+input[type="datetime-local"] {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: solid 1px #cfcfcf;
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: #999999;
+  margin-top: 16px;
+}
+.timeChoice {
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
+.timeChoice p {
+  margin-bottom: 0;
+}
+.date {
+  align-self: flex-end;
+}
+.tariff {
+  align-self: left;
+  margin-top: 8px;
+}
+.options p {
+  margin-top: 32px;
+}
+.advanced {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  & label {
+    margin-top: auto;
+  }
+}
+.choice {
+  width: 100%;
+}
+.result {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 100px;
+}
+#carImgResult {
+  padding-top: 30px;
+}
+#checkOrder {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 24px;
+  line-height: 28px;
   color: #121212;
 }

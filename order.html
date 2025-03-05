@@ -152,11 +152,49 @@
                   <div class="options hidden">
                     <div class="optionsColor">
                       <p>Цвет</p>
-                      <input type="radio" name="color" id="allColors">
-                      <label for="color">Любой</label>
+                      <input type="radio" name="color" id="allColors" checked>
+                      <label for="allColors">Любой</label>
                     </div>
+                    <div class="timeChoice">
+                      <p>Дата аренды</p>
+                      <div class="date">
+                       <label for="start-date">С</label>
+                       <input type="datetime-local" id="start-date" name="start-date" placeholder="С">
+                       </div>
+                     <div class="date">
+                       <label for="end-date">По</label>
+                        <input type="datetime-local" id="end-date" name="end-date" placeholder="По" disabled>
+                     </div>
+                    </div>
+                     <p>Тариф</p>
+                     <div class="tariff">
+                       <input type="radio" name="tariff" id="minutely">
+                       <label for="minutely">Поминутно, 7₽/мин</label>
+                     </div>
+                     <div class="tariff">
+                       <input type="radio" name="tariff" id="daily" checked>
+                       <label for="daily">На сутки, 1999 ₽/сутки</label>
+                     </div>
+                     <p>Дополнительно</p>
+                     <div class="advanced">
+                       <input type="checkbox" name="advanced" id="fuel">
+                       <label for="fuel">Полный бак, 2000р</label>
+                       <input type="checkbox" name="advanced" id="childSeat">
+                       <label for="childSeat">Детское кресло, 1000р</label>
+                       <input type="checkbox" name="advanced" id="wheel">
+                       <label for="wheel">Правый руль, 3000р</label>
+                     </div>
                   </div>
-                  <div class="result hidden">страница ИТОГО</div>
+                  <div class="result hidden">
+                    <div class="finalInfo">
+                      <p id="checkOrder"></p>
+                      <h2 id="carModelResult"></h2>
+                      <div id="carPlateResult"></div>
+                      <p id="fuelResult"><b>Топливо: </b><span></span></p>
+                      <p id="accessResult"><b>Доступна с </b><span></span></p>
+                    </div>
+                    <div id="carImgResult"></div>
+                  </div>
                 </div>
                 <div class="score">
                   <h2>Ваш заказ:</h2>
